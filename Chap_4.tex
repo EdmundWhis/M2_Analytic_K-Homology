@@ -1,0 +1,1029 @@
+% !TeX root = main.tex
+
+\chapter{Kasparov 理论}
+
+在从微分几何和微分拓扑滥觞的指标理论的基础上发展了 $ K $--理论, 而第 2 章和第 3 章中通过对偶性建立了 $ K $--同调的概念. Kasparov 另辟蹊径, 采用另一种结构独立地发展了 $ K $--同调. 正如单纯同调与奇异同调的关系一样, 在研究对象足够良好时这两种 $ K $--同调是同构的. Kasparov 使用了 Fredholm 模的语言来描述 $ K $--同调群中的元素, 本章中将会展现使用对偶理论构造的 $ K $--同调中难以解决的问题是如何用 Kasparov 的构造较为简洁地证明的. 在上一章的最后, 我们讨论了 Brown--Douglas--Fillmore 定理, 这起源于算子理论中对本质正规算子的分类, 由此通过 $ C^* $ 代数的扩张, 我们得以讨论另一种对偶性: 即 Paschke 对偶性. 它和 Fredholm 模都属于 $ K $--同调的范畴中.
+
+\section{Fredholm 模}
+
+在之前的泛函分析基础课程中已经叙述过一个单位 $ C^* $ 代数 $ \CA $ 中的幂等元和对合元是同胚的, 映射由 $ p\mapsto 2p-1 $ 给出. 类似地投影元与自伴的对合元也是同胚的. 因此 $ K_0(\CA) $ 也可以使用对合元来定义. 注意到
+\[
+	\GL(\CA)\cong\text{Invo}(\Mat_2(\CA))\cap\set{\mqty[0 & a \\ b & 0] : a,b\in\CA}
+\]
+的同胚由
+\[
+	u\mapsto\mqty[0 & u \\ u^{-1} & 0],\qquad a\mapsfrom\mqty[0 & a \\ b & 0]
+\]
+给出. 类似地,
+\[
+	\CU(\CA)\cong\text{Invo}_{\text{sa}}(\Mat_2(\CA))\cap\set{\mqty[0 & a \\ a^* & 0] : a\in\CA}
+\]
+给出一个同胚.
+
+\subsection{分次结构}
+
+使用较为现代的语言叙述, 一点分次结构的概念是必需的. 我们主要着眼于 $ \Z_2 $--分次结构, 这是传统的 ``奇算子'' 和 ``偶算子'' 的重述.
+
+\begin{Definition}[$ \Z_2 $--分次结构]
+	设 $ V $ 是 $ \C $--向量空间, $ \alpha\in\Aut V $ 是一个对合, 也即 $ \alpha\circ\alpha=\id $. $ \alpha $ 称作是一个 $ V $ 上的 $ \Z_2 $\emph{--分次结构}. 等价地, $ V $ 上的 $ \Z_2 $--分次结构可以看作是一个分解
+	\[
+		V=V^+\oplus V^-,
+	\]
+	其中 $ V^+ $ 和 $ V^- $ 分别称作是 $ V $ 的\emph{正部}和\emph{负部}. 其中的正负号有时写在右上角, 有时写在右下角, 取决于另一个角标在什么位置.
+\end{Definition}
+
+自同构 $ \alpha $ 和分解 $ V^+\oplus V^- $ 的联系在于: 给定自同构 $ \alpha $ 后令 $ V^+=\ker(\alpha-\id) $, $ V^-=\ker(\alpha+\id) $ 得到 $ V $ 的一个分解; 而给定 $ V=V^+\oplus V^- $ 之后令 $ \alpha(v^+\oplus v^-)=v^+\oplus-v^- $, 则 $ \alpha $ 是一个自同构. 若 $ V $ 上还有内积结构, 特别地, $ V=H $ 是一个 Hilbert 空间时, 分解变成了 Hilbert 空间的直和 $ H=H^+\oplus H^- $, 而自同构 $ \alpha $ 成为了一个自伴的对合元, 因此是 $ H $ 上的酉元.
+
+\begin{Definition}[$ \Z_2 $--分次结构]
+	设 $ A $ 是一个代数, 对合 $ \alpha\in\Aut(A) $ 称作是 $ A $ 上的一个 $ \Z_2 $\emph{--分次结构}. 等价地, 它等同于一个分解 $ A=A^+\oplus A^-=:A^{\text{even}}\oplus A^{\text{odd}} $, 满足
+	\[
+		A^+A^+\subset A^+,\quad A^+A^-\subset A^-,\quad A^-A^+\subset A^-,\quad A^-A^-\subset A^+.
+	\]
+\end{Definition}
+
+奇偶的记号来源于: 若 $ A=C_0(\R) $, 那么分解 $ C_0(\R)^{\text{even}}\oplus C_0(\R)^{\text{odd}} $ 给出一个 $ \Z_2 $--分次结构, 其中前者是 $ \R $ 上的偶函数全体而后者是奇函数全体. 等价地, $ \alpha $ 由 $ (\alpha f)(t):=f(-t) $ 给出.
+
+\begin{Example}
+	设 $ V $ 是一个分次的向量空间, $ V=V^+\oplus V^- $, $ \End(V) $ 也是分次的, 其中
+	\[
+		\begin{aligned}
+			\End(V)^{\text{even}}&:=\set{\mqty[T_1 & 0 \\ 0 & T_2] : T_1\in\End(V^+),\ T_2\in\End(V^-)},\\
+			\End(V)^{\text{odd}}&:=\set{\mqty[0 & T_1 \\ T_2 & 0] : T_1\in\CL(V^-,V^+),\ T_2\in\CL(V^+,V^-)}.
+		\end{aligned}
+	\]
+	其中 $ \CL(E,F) $ 表示从 $ E $ 到 $ F $ 的(\textit{未必有界的})线性算子全体. 等价地, $ \tilde{\alpha}\in\Aut(\End(V)) $ 使得 $ \tilde{\alpha}(T)=\alpha T\alpha $, 这里 $ \alpha=\diag\set{1,-1} $.
+\end{Example}
+
+将 $ \Mat_2(\CA) $ 给定一个分次 $ \alpha=\diag\set{1,-1} $ 后得到的代数记作 $ \Mat_{1;1}(\CA) $, 那么
+\[
+	\GL(\CA)\cong\text{Invo}(\Mat_2(\CA))\cap\set{\mqty[0 & * \\ * & 0]}=\text{Invo}(\Mat_{1;1}(\CA))\cap\Mat_{1;1}(\CA)^{\text{odd}}.
+\]
+并且
+\[
+	\begin{aligned}
+		\text{Invo}(\Mat_{1;1}(\CA))\cap\Mat_{1;1}(\CA)^{\text{even}}&=\set{\mqty[a & 0 \\ 0 & b] : a,b\in\text{Invo}(\CA)}\\
+		&\cong\text{Invo}(\CA)\times\text{Invo}(\CA)\cong\text{Idem}(\CA)\times\text{Idem}(\CA).
+	\end{aligned}
+\]
+上述两式中的 $ \cong $ 均表示同胚. 那么若记 $ \Mat_{m;n}(\CA) $ 为矩阵代数分次中正部维数为 $ m $, 负部维数为 $ n $ 得到的代数, 那么 $ K_0(\CA) $ 可以由 $ \text{Invo}(\Mat_{n;n}(\CA))^{\text{even}} $ 得到.
+
+对分次代数自然地有齐次元的概念:
+
+\begin{Definition}[齐次元, 分次交换子]
+	设 $ \CA=\CA^{+}\oplus\CA^{-} $, $ a\in\CA $. 若 $ a\in\CA^+ $ 或 $ a\in\CA^- $, 则称 $ a $ 是\emph{齐次元}. 对齐次元 $ a $, 定义其次数为
+	\[
+		\deg a:=\begin{cases}
+			0, & a\in\CA^+,\\ 1, & a\in\CA^-.
+		\end{cases}
+	\]
+	并对两个齐次元 $ a,a'\in\CA $ 定义其\emph{分次交换子}为
+	\[
+		[a,a']=aa'-(-1)^{\deg a\deg a'}a'a=\begin{cases}
+			aa'+a'a, & \deg a=\deg a'=1,\\ aa'-a'a, & \text{其他情形}.
+		\end{cases}
+	\]
+	并且分次交换子可以线性地扩张到 $ \CA $ 上.
+\end{Definition}
+
+\begin{Definition}[分次张量积]
+	设 $ V_1 $, $ V_2 $ 是分次向量空间, 分别具有分次 $ \alpha_1 $ 和 $ \alpha_2 $. 定义其\emph{分次张量积} $ V=V_1\widehat{\otimes}V_2:=V_1\otimes V_2 $, 带有分次 $ \alpha_1\otimes\alpha_2 $, 具体地, 
+	\[
+		(V_1\widehat{\otimes}V_2)^+=(V_1^+\otimes V_2^+)\oplus(V_1^-\otimes V_2^-),\quad (V_1\widehat{\otimes}V_2)^-=(V_1^+\otimes V_2^-)\oplus(V_1^-\otimes V_2^+).
+	\]
+
+	设 $ A_1 $, $ A_2 $ 是分次代数, 分别具有分次 $ \alpha_1 $ 和 $ \alpha_2 $. 定义其\emph{分次张量积} $ A=A_1\widehat{\otimes}A_2:=A_1\otimes A_2 $, 带有分次 $ \alpha_1\otimes\alpha_2 $, 并线性地扩张到 $ A $ 上. 此时 $ A $ 上的乘法由
+	\[
+		(a_1\widehat{\otimes}a_2)(a_1'\widehat{\otimes}a_2')=(-1)^{\deg a_2\deg a_1'}(a_1a_1')\widehat{\otimes}(a_2a_2').
+	\]
+	其中 $ a_1,\ a_1'\in A_1 $, $ a_2,\ a_2'\in A_2 $ 都是齐次元. 乘法的定义中在每次交换 $ \deg a=1 $ 的元素时都引入一个负号.
+\end{Definition}
+
+注意到
+\[
+	\begin{aligned}
+		[a_1\widehat{\otimes}1, 1\widehat{\otimes}a_2]&=(a_1\widehat{\otimes}1)(1\widehat{\otimes}a_2)-(-1)^{\deg a_1\deg a_2}(a_1\widehat{\otimes}a_2)(a_1\widehat{\otimes}1)\\
+		&=a_1\widehat{\otimes}a_2-(-1)^{\deg a_1\deg a_2}(-1)^{\deg a_1\deg a_2}a_1\widehat{\otimes}a_2=0,
+	\end{aligned}
+\]
+于是若 $ a_1\in A_1^- $, $ a_2\in A_2^- $, 那么
+\[
+	\begin{aligned}
+		(a_1\widehat{\otimes}1+1\widehat{\otimes}a_2)^2&=(a_1\widehat{\otimes}1)(a_1\widehat{\otimes}1)+(a_1\widehat{\otimes}1)(1\widehat{\otimes}a_2)+(1\widehat{\otimes}a_2)(a_1\widehat{\otimes}1)+(1\widehat{\otimes}a_2)(1\widehat{\otimes}a_2)\\
+		&=a_1^2\widehat{\otimes}1+a_1\widehat{\otimes}a_2+(-1)^{\deg a_1\deg a_2}a_1\widehat{\otimes}a_2+1\widehat{\otimes}a_2^2\\
+		&=a_1^2\widehat{\otimes}1+1\widehat{\otimes}a_2^2.
+	\end{aligned}
+\]
+
+\begin{Proposition}
+	设 $ V_1 $, $ V_2 $ 是分次的向量空间, 则 $ \End(V_1\widehat{\otimes}V_2)\cong\End(V_1)\widehat{\otimes}\End(V_2) $, 其中的同构由
+	\[
+		(T_1\widehat{\otimes}T_2)(v_1\widehat{\otimes}v_2)=(-1)^{\deg v_1\deg T_2}(T_1v_1)\widehat{\otimes}(T_2v_2),
+	\]
+	并线性地延拓到 $ \End(V_1\widehat{\otimes}V_2) $.
+\end{Proposition}
+\begin{Proof}
+	直接计算验证即可.\qed
+\end{Proof}
+
+作为经典的分次 *-代数, 考虑 \emph{Clifford 代数} $ \text{Cl}_n(\C) $ 是由 $ e_1,\dots,e_n $ 生成的 *-代数, 它们满足关系
+\[
+	e_j^2=-1,\qquad e_j^*=e_j,\qquad \forall i\ne j\,(e_ie_j+e_je_i=0).
+\]
+因此 $ \text{Cl}_n(\C) $ 中的元素可以写成形如 $ \set{e_{j_1}\cdots e_{j_m} : 1\leqslant m\leqslant n, j_1<\dots<j_m} $ 元素的线性组合, 于是 $ \dim\text{Cl}_n(\C)=2^n $. 其中分次结构由
+\[
+	\begin{aligned}
+		\text{Cl}_n(\C)^{\text{even}}&:=\lrangle{\set{e_{j_1}\cdots e_{j_m} : 1\leqslant m\leqslant n,\ ,m=2k,\ j_1<\dots<j_m}}\\
+		\text{Cl}_n(\C)^{\text{odd}}&:=\lrangle{\set{e_{j_1}\cdots e_{j_m} : 1\leqslant m\leqslant n,\ ,m=2k+1,\ j_1<\dots<j_m}}
+	\end{aligned}
+\]
+等价地, $ \Z_2 $--分次结构由对合 $ \alpha(e_j)=-e_j $ 给出.
+
+对 $ m,n\in\N_{>0} $, 分次张量积给出同构 $ \text{Cl}_n(\C)\widehat{\otimes}\text{Cl}_m(\C)\cong\text{Cl}_{m+n}(\C) $. 这因前者的生成元是 $ e_i\widehat{\otimes}1 $, 后者的生成元是 $ 1\widehat{\otimes}e_j $, 只需验证它们满足 Clifford 交换条件即可.
+
+\subsection{Fredholm 模}
+
+一般地, 若概念具有分次和不分次的区别, 本文将在括号中标注在分次情形下对于分次的要求, 而非重复两次定义.
+
+\begin{Definition}[Fredholm 模]
+	设 $ \CA $ 是可分 $ C^* $ 代数, 一个 $ \CA $ 上的(\textit{分次的})\emph{Fredholm 模} $ (\rho,H,F) $ 意即以下资料:
+	\begin{itemize}
+		\item 一个可分的(\textit{分次})Hilbert 空间 $ H $,
+		\item 一个(\textit{偶的})表示 $ \rho : \CA\to\CB(H) $, (\textit{$ \rho $ 是偶的意即 $ \forall a\in\CA $, $ \rho(a) $ 是偶的.})
+		\item 一个(\textit{奇的})算子 $ F\in\CB(H) $ 使得: $ \forall a\in\CA $, $ (F^2-1)\rho(a)\sim 0 $, $ (F-F^*)\rho(a)\sim 0 $, $ [F,a]\sim 0 $.
+	\end{itemize}
+\end{Definition}
+
+在分次的情形下, 上述定义等价于以下资料:
+\begin{itemize}
+	\item 一个可分的分次 Hilbert 空间 $ H=H^+\oplus H^- $,
+	\item 表示 $ \rho^+ : \CA\to\CB(H^+) $ 和 $ \rho^- : \CA\to\CB(H^-) $,
+	\item 算子 $ U\in\CB(H^-,H^+) $ 和 $ V\in\CB(H^+,H^-) $ 使得:
+	\[
+		\begin{aligned}
+			(VU-1)\rho^+(a)\sim 0,&\ \ (V^*-U)\rho^+(a)\sim 0,&\ \ V\rho^-(a)-\rho^+(a)V\sim 0,\\
+			(UV-1)\rho^-(a)\sim 0,&\ \ (U^*-V)\rho^-(a)\sim 0,&\ \ U\rho^+(a)-\rho^-(a)U\sim 0.
+		\end{aligned}
+	\]
+\end{itemize}
+这即 $ F=\mqty[ & V \\ U & ] $.
+
+在对偶理论中定义过本质交换子
+\[
+	\FD_\rho(\CA):=\set{T\in\CB(H) : [T,\rho(a)]\sim 0,\ \forall a\in\CA}
+\]
+和相对紧算子
+\[
+	\FD_\rho(\CA\slantpar\CA)=\set{T\in\CB(H) : \rho(a)T\sim 0\sim T\rho(a),\ \forall a\in\CA}.
+\]
+它们都要求表示 $ \rho $ 是丰沛表示. 但 Fredholm 模中的表示并没有丰沛的要求. 对 Fredholm 模的定义可以重述作:
+\[
+	(\rho, H, F) \,\text{是 Fredholm 模}\,\Longleftrightarrow F\in\FD_\rho(\CA)\land [F]\in\text{Invo}_{\text{sa}}(\FD(\CA)/\FD(\CA\slantpar\CA)).
+\]
+
+Fredholm 模的名字来源于若 $ \CA=\C $, 且 $ \rho $ 保持单位, 那么此时的算子 $ U $ 和 $ V $ 就是 Fredholm 算子. 我们考虑分次的情形: 设
+\begin{itemize}
+	\item $ \rho : \C\to\CB(H) $ 由 $ \rho^+(1)=:P^+\in\CP(\CB(H^+)) $ 和 $ \rho^-(1)="P^-\in\CP(\CB(H^-)) $ 确定;
+	\item $ F=\mqty[ & V \\ U &] $ 满足 $ (UV-1)P^-\sim 0 $, $ (VU-1)P^+\sim 0 $, $ (U-V^*)P^+\sim 0 $, $ (V-U^*)P^-\sim 0 $, $ UP^+\sim P^+U $, $ VP^-\sim P^-V $.
+\end{itemize}
+若 $ \rho $ 保持单位, 那么 $ P^+=\id_{H^+} $, $ P^-=\id_{H^-} $. 而 $ U $ 和 $ V $ 都是 Fredholm 算子.
+
+\begin{Example}
+	设 $ \CA=C^*(\Z)=C(\T) $, 做 Fourier 变换后可以将其表示到 $ \CB(\ell^2(\Z)) $ 上, 将这一表示记作
+	\[
+		\rho : C^*(\Z)\to\CB(\ell^2(\Z)),\qquad z(t)=\exp(2\pi\imag t)\mapsto[e_k\mapsto e_{k+1}],
+	\]
+	再令 $ F\in\CB(\ell^2(\Z)) $ 使得 $ k\geqslant 0 $ 时 $ F(e_k)=e_k $, 当 $ k<0 $ 时 $ F(e_k)=-e_k $. 断言 $ (\rho,\ell^2(\Z),F) $ 是一个 Fredholm 模.
+
+	只需逐条验证定义. 注意到 $ F $ 是自伴的对合, 于是有关 $ F $ 的前两条要求自动满足. 而 $ z $ 是 $ C^*(\Z) $ 的生成元, 因此只需验证 $ [F,\rho(z)]\sim 0 $. 这因
+	\[
+		[F,\rho(z)]e_k=F\rho(z)e_k-\rho(z)Fe_k=\begin{cases}
+			2e_0, & k=0 \\ 0, & \text{其余情形},
+		\end{cases}
+	\]
+	因此 $ [F,\rho(z)]\in\CK(H) $.
+\end{Example}
+
+\begin{Example}
+	设 $ \varphi : \CA\to\C $ 是一个 *-同态, 令 $ \rho^+=\varphi $, $ \rho^-=0 $, $ H^+=\C $, $ H^-=0 $, $ U=V=0 $. 那么
+	\[
+		\left(\mqty[\rho^+ & \\ & \rho^-], \mqty[H^+ & \\ & H^-], \mqty[ & V \\ U & ]\right)
+	\]
+	是一个分次的 Fredholm 模. 将 $ \C $ 替换成 $ \CK(H_0) $ 后它仍然是一个分次 Fredholm 模. 因此一个 *-同态可以由此诱导一个 Fredholm 模.
+\end{Example}
+
+\section{Kasparov \textit{KK}--群}
+
+我们的目的是用 Fredholm 模重新定义 $ K $--同调, 即
+\[
+	K^*(\CA)=\set{\CA\,\text{上的 Fredholm 模}}/\sim,
+\]
+这里的问题在于: 首先, $ \CA $ 上的 Fredholm 模全体并非一个集合, 这令一些集合论学者十分恼怒. 其次, 应当如何定义其上的等价关系, 使它可以生成一个群.
+
+\subsection{Kasparov 群}
+
+先定义 Fredholm 的两种等价关系:
+
+\begin{Definition}
+	设 $ (\rho_0, H_0, F_0) $ 和 $ (\rho_1, H_1, F_1) $ 是两个 Fredholm 模.
+	\begin{enumerate}
+		\item 若存在酉元 $ U : H_0\to H_1 $ 使得 $ \rho_1(a)=U\rho_0(a)U^* $, $ F_1=UF_0U^* $, 则称 $ (\rho_0, H_0, F_0) $ 和 $ (\rho_1, H_1, F_1) $ 是\emph{酉等价}的, 记作 $ (\rho_0, H_0, F_0)\sim_u(\rho_1, H_1, F_1) $. 在分次的情形下, 还要求酉算子 $ U $ 保持分次.
+		\item 若存在一族对 $ t $ 连续的 $ (F_t)_{0\leqslant t\leqslant 1}\subset\CB(H) $, 使得对任意 $ t $, $ (\rho, H, F_t) $ 是 Fredholm 模, 则称 $ (\rho, H, F_0) $ 和 $ (\rho, H, F_1) $ 是\emph{算子同伦}的, 记作 $ (\rho, H, F_0)\sim_{o.h.}(\rho, H, F_1) $. (\textit{这里要求表示 $ \rho $ 和 Hilbert 空间 $ H $ 对两个 Fredholm 模是一致的})
+		\item 若 $ \forall a\in\CA $, 都有 $ (F_0-F_1)\rho(a)\sim 0 $, 则称 $ (\rho, H, F_0) $ 和 $ (\rho, H, F_1) $ 相差一个紧摄动, 记作 $ (\rho, H, F_0)\sim_{c.p.}(\rho, H, F_1) $.
+	\end{enumerate}
+	于是相差一个紧摄动的两个 Fredholm 模一定是算子同伦的, 其中的 $ F_t $ 由 $ F_t=(1-t)F_0+tF_1 $ 给出.
+\end{Definition}
+
+基本的思路是定义 $ \CA $ 上 Fredholm 模的等价类的和, 但问题在于此处 $ \CA $ 上的 Fredholm 模全体并非一个集合, 因此考虑 $ \CA $ 上 Fredholm 模的酉等价类全体, 并在其上定义 $ KK^i(\CA) $ 是由酉等价类全体生成的 Abel 群, 再商去以下的等价关系:
+\begin{itemize}
+	\item 若 $ (\rho_0, H_0, F_0)\sim_{o.h.}(\rho_1, H_1, F_1) $, 则在 $ KK^i(\CA) $ 中 $ [\rho_0,H_0, F_0]=[\rho_1, H_1, F_1] $;
+	\item 在 $ KK^i(\CA) $ 中定义 $ [\rho_0, H_0, F_0]+[\rho_1, H_1, F_1]:=[\rho_0\oplus\rho_1, H_0\oplus H_1, F_0\oplus F_1] $.
+\end{itemize}
+并且约定分次 Fredholm 模生成的群是 $ KK^0(\CA) $, 不分次的 Fredholm 模生成的群是 $ KK^1(\CA) $.
+
+于是最初的想法
+\[
+	KK^i(\CA)=\set{\CA\,\text{上的 Fredholm 模}}/\sim_{KK},
+\]
+中的等价关系 $ \sim_{KK} $ 包含了酉等价, 算子同伦和 Grothendieck 完备化.
+
+同样地, 我们希望 $ KK^i $ 是一个反变函子, 也即 $ \alpha : \CA\to\CB $ 应当诱导出
+\[
+	\alpha^* : KK^i(\CB)\to KK^i(\CA),\qquad [\rho, H, F]\mapsto[\rho\circ\alpha, H, F].
+\]
+要回答这一问题, 首先需要讨论 $ -[\rho, H, F] $ 究竟如何使用 Fredholm 模来表示.
+
+\begin{Definition}[退化]
+	设 $ (\rho, H, F) $ 是 Fredholm 模. 若对任意 $ a\in\CA $,
+	\[
+		(F^2-1)\rho(a)=0,\qquad (F-F^*)\rho(a)=0,\qquad [F,\rho(a)]=0,
+	\]
+	也即 Fredholm 模中有关 $ F $ 要求中的本质成立全部增强为成立, 那么称 $ (\rho, H, F) $ 是一个\emph{退化}的 Fredholm 模.
+\end{Definition}
+
+其 ``退化'' 的名称来源于它在 $ KK^i(\CA) $ 中代表的等价类.
+
+\begin{Proposition}
+	退化 Fredholm 模在 $ KK^i(\CA) $ 中的等价类即为加法单位元 $ 0 $. 于是对一般的 Fredholm 模 $ (\rho, H, F) $, 其加法逆元如下给出:
+	\begin{enumerate}
+		\item 若 $ (\rho, H, F) $ 是不分次的, 则在 $ KK^1(\CA) $ 中 $ -[\rho, H, F]=[\rho, H, -F] $;
+		\item 若 $ (\rho, H, F) $ 是分次的, 则在 $ KK^0(\CA) $ 中, 令 $ H^{\op}=H^-\oplus H^+ $, 则 $ -[\rho, H, F]=[\rho, H^{\op}, -F] $.
+	\end{enumerate}
+\end{Proposition}
+\begin{Proof}
+	对于前一断言, 使用 Eilenberg swindle, 令 $ \rho'=\rho^{\oplus\infty} $, $ H'=H^{\oplus\infty} $, $ F'=\diag\set{F,F,\dots}\in\CB(H^{\oplus\infty}) $. 那么 $ (\rho', H', F') $ 也是一个 Fredholm 模. 只需注意到
+	\[
+		(\rho, H, F)\oplus(\rho', H', F')\sim_u(\rho', H', F'),
+	\]
+	从而 $ [\rho, H, F]=0 $.
+
+	(1) 只需检验 $ [\rho, H, F]+[\rho, H, -F]=[\rho\oplus\rho, H\oplus H, F\oplus(-F)] $ 是退化的即可. 令
+	\[
+		F_t=\mqty[\cos\left(\frac{\pi t}{2}\right)F & \sin\left(\frac{\pi t}{2}\right)\id \\ \sin\left(\frac{\pi t}{2}\right)\id & -\cos\left(\frac{\pi t}{2}\right)F],
+	\]
+	那么 $ F_t $ 关于 $ t $ 连续, 且 $ (F_t)_{0\leqslant t\leqslant 1} $ 是一个算子同伦, 因此是退化的.
+
+	(2) 只需检验 $ [\rho, H, F]+[\rho, H^{\op}, -F]=[\rho\oplus\rho, H\oplus H^{\op}, F\oplus(-F)] $ 是退化的即可. 同样地令
+	\[
+		F_t=\mqty[\cos\left(\frac{\pi t}{2}\right)F & \sin\left(\frac{\pi t}{2}\right)\id \\ \sin\left(\frac{\pi t}{2}\right)\id & -\cos\left(\frac{\pi t}{2}\right)F],
+	\]
+	此处 $ H^{\op} $ 的存在保证了 $ \mqty[ & 1 \\ 1 &] $ 是奇算子, 因此 $ (F_t)_{0\leqslant t\leqslant 1} $ 仍是一个算子同伦, 从而是退化的.\qed
+\end{Proof}
+
+类似于 $ K $--理论的情形: 称 $ (\rho_0, H_0, F_0) $ 与 $ (\rho_1, H_1, F_1) $ \emph{稳定同伦}, 若 $ KK^i(\CA) $ 中 $ [\rho_0, H_0, F_0]=[\rho_1, H_1, F_1] $. 这等价于: 存在 $ (\rho', H', F') $ 使得
+\[
+	(\rho_0\oplus \rho', H_0\oplus H', F_0\oplus F')\sim_u x\sim_{o.h.}x'\sim_u(\rho_1\oplus \rho', H_1\oplus H', F_1\oplus F'),
+\]
+这里 $ x $ 和 $ x' $ 是 Fredholm 模. 之后将稳定同伦记作 $ \sim_{s.h.} $.
+
+\subsection{Fredholm 模的规范化}
+
+本小节的目的是找到 Fredholm 模的一些等价类 $ \CC $, 使得当我们定义
+\[
+	KK^p_{\CC}(\CA)=\set{\CC\,\text{上的酉等价类}}/\sim_{KK,\CC}
+\]
+时, $ KK_{\CC}^p(\CA)\to KK^p(\CA) $ 是一个同构. 接下来我们将逐步给 Fredholm 模加上一些限制, 进而说明 $ KK^p(\CA) $ 中等价类的代表元可以假定具有一些额外的条件, 这一过程即为本小节标题中的\textit{规范化}.
+
+在本小节中, 我们将逐步作出以下限制:
+\begin{itemize}
+	\item 对 $ F $: 自伴、收缩、对合.
+	\item 对 $ (\rho, H) $: 非退化.
+	\item (\textit{在分次的情形下})对分次 $ \alpha $: 平衡.
+\end{itemize}
+但需要注意的是这些限制未必可以同时被满足, 例如对 $ (\rho, H) $ 的非退化要求和对 $ F $ 的对合要求在 $ \CA $ 是单位 $ C^* $ 代数是不能同时成立.
+
+\begin{Definition}[自伴, 收缩]
+	设 $ (\rho, H, F) $ 是一个 Fredholm 模. 称
+	\begin{enumerate}
+		\item $ (\rho, H, F) $ 是\emph{自伴}的, 若 $ F $ 是自伴的;
+		\item $ (\rho, H, F) $ 是\emph{收缩}的, 若 $ \norm{F}\leqslant 1 $.
+	\end{enumerate}
+\end{Definition}
+
+\begin{Lemma}\label{lem:4.1-自伴条件}
+	$ KK^p(\CA) $ 可以被\textit{自伴} Fredholm 模规范化, 即:
+	\begin{enumerate}[(N1)]
+		\item 对任意(分次或不分次的) Fredholm 模 $ (\rho, H, F) $, 存在(分次或不分次的)自伴 Fredholm 模 $ (\rho', H', F') $ 使得 $ [\rho, H, F]=[\rho', H', F'] $;
+		\item 对任意(分次或不分次的)自伴 Fredholm 模 $ (\rho_0, H_0, F_0) $ 和 $ (\rho_1, H_1, F_1) $, 它们间的稳定同伦可以通过自伴 Fredholm 模实现, 也即稳定同伦中的 $ x $, $ x' $ 和连接 $ x $ 和 $ x' $ 的算子同伦都是自伴的 Fredholm 模.
+	\end{enumerate}
+\end{Lemma}
+\begin{Proof}
+	记 $ \CF $ 是 Fredholm 模全体, $ \CF_{\text{sa}} $ 是自伴 Fredholm 模全体. 定义一个对应
+	\[
+		\varphi_1 : \CF\to\CF_{\text{sa}},\qquad (\rho, H, F)\mapsto\left(\rho, H, \frac{F+F^*}{2}\right).
+	\]
+	后者仍是一个 Fredholm 模, 这因前者是 Fredholm 模, 故 $ F\in\FD(\CA) $, 于是 $ [F]\in\text{Invo}_{\text{sa}}(\FD(\CA)/\FD(\CA\slantpar\CA)) $. 而 $ (F+F^*)/2 $ 自伴, 从而后者是自伴 Fredholm 模. 对应 $ \varPhi_1 $ 满足:
+	\begin{itemize}
+		\item $ \varPhi_1(\rho, H, F)\sim_{s.h.}(\rho, H, F) $. 这因在 $ \FD(\CA)/\FD(\CA\slantpar\CA) $ 中 $ [F]=([F]+[F^*])/2 $, 而 $ [(F+F^*)/2]=([F]+[F^*])/2 $, 因此 $ F\sim_{c.p.}(F+F^*)/2 $.
+		\item $ \varPhi_1 $ 保持算子同伦. 这因若 $ (\rho, H, F_t) $ 给出一个算子同伦, 那么容易验证 $ \varPhi_1(\rho, H, F_t) $ 是通过自伴 Fredholm 模实现的算子同伦. 这说明 $ \varPhi_1 $ 在 $ \CF $ 上是连续的.
+		\item $ \varPhi_1 $ 保持直和和酉等价.
+	\end{itemize}
+	于是令 $ (\rho', H', F')=(\rho, H, (F+F^*)/2) $ 之后即可得到 (1). 而 (2) 由以上 $ \varPhi_1 $ 满足的第二和第三条立刻得到.\qed
+\end{Proof}
+
+由于自伴算子可以做连续函数演算, 因此通过函数演算可以进一步加上收缩的条件:
+
+\begin{Lemma}\label{lem:4.1-收缩条件}
+	$ KK^p(\CA) $ 可以被自伴、\textit{收缩} Fredholm 模规范化.
+\end{Lemma}
+\begin{Proof}
+	记 $ \CF_{\text{sa},\leqslant 1} $ 是自伴、收缩 Fredholm 模全体. 由引理~\ref{lem:4.1-自伴条件}~知可从 $ \CF_{\text{sa}} $ 出发定义一个对应
+	\[
+		\varPhi_2 : \CF_{\text{sa}}\to\CF_{\text{sa},\leqslant 1},\qquad (\rho, H, F)\mapsto(\rho, H, f(F)).
+	\]
+	其中 $ f : \R\to[-1,1] $ 是函数
+	\[
+		f(t)=\begin{cases}
+			1, & t>1\\ t, & -1\leqslant t\leqslant 1,\\ -1, & t<-1.
+		\end{cases}
+	\]
+	于是只需要检验 $ f(F)\sim_{c.p.}F $. 由于 $ F $ 是自伴的对合, 于是 $ \sigma([F])\subset\set{-1,1} $, 这即 $ \sigma([F]) $ 上 $ f=\id $. 于是 $ [F]=f([F])=[f(F)] $.\qed
+\end{Proof}
+
+我们并未单独检验不分次和分次的两种情形, 这是因为上述的证明对分次的情形, 当施以适当的分次时仍然是成立的. 需要注意的是, 将 Fredholm 模加上分次条件的过程并非是规范化. 为此考虑忘却映射 $ f $, 它将分次的 Fredholm 模忘掉分次结构直接视作不分次的 Fredholm 模. 但其导出的态射 $ f^* : KK^0(\CA)\to KK^1(\CA) $ 是零态射. 只需选取
+\[
+		F_t=\mqty[\cos\left(\frac{\pi t}{2}\right)\id & \sin\left(\frac{\pi t}{2}\right)V \\ \sin\left(\frac{\pi t}{2}\right)U & -\cos\left(\frac{\pi t}{2}\right)\id],
+\]
+即可. 在另一个方向上, 使用 $ \CF_{\text{gr}} $ 表示分次的 Fredholm 模全体, 通过以下的对应
+\[
+	\Psi : \CF\to\CF_{\text{gr}},\qquad (\rho, H, F)\mapsto\left(\rho\oplus\rho, H\oplus H, \mqty[ & F^* \\ F &]\right)
+\]
+通过不分次的 Fredholm 模构造对应的分次 Fredholm 模, 那么 $ [\Psi(\rho, H, F)]=0\in KK^1(\CA) $.
+
+\begin{Lemma}\label{lem:4.1-对合条件}
+	$ KK^p(\CA) $ 可以被自伴、收缩且\textit{对合}的 Fredholm 模规范化, 此处的对合指 $ F^2=1 $.
+\end{Lemma}
+\begin{Proof}
+	记 $ \CF_{\text{sa},\leqslant 1,\text{invo}} $ 是自伴、收缩的对合 Fredholm 模全体. 由引理~\ref{lem:4.1-收缩条件}~知可从 $ \CF_{\text{sa},\leqslant 1} $ 出发定义一个对应
+	\[
+		\varPhi_3 : \CF_{\text{sa},\leqslant 1}\to\CF_{\text{sa},\leqslant 1,\text{invo}},\qquad (\rho, H, F)\mapsto\left(\rho\oplus 0, H\oplus H, \mqty[F & (1-F^2)^{1/2} \\ (1-F^2)^{1/2} & -F]\right).
+	\]
+	注意到
+	\[
+		\mqty[F & (1-F^2)^{1/2} \\ (1-F^2)^{1/2} & -F]^*=\mqty[F & (1-F^2)^{1/2} \\ (1-F^2)^{1/2} & -F],\ \mqty[F & (1-F^2)^{1/2} \\ (1-F^2)^{1/2} & -F]^2=\mqty[\id & \\ & \id],
+	\]
+	因此后者的确是一个对合 Fredholm 模. 并且注意到
+	\[
+		\begin{aligned}
+			\varPhi_3(\rho, H, F)&=\left(\rho\oplus 0, H\oplus H, \mqty[F & (1-F^2)^{1/2} \\ (1-F^2)^{1/2} & -F]\right)\\
+			&\sim_{c.p.}\left(\rho\oplus 0, H\oplus H, \mqty[F & \\ & -F]\right)=(\rho, H, F)\oplus(0, H, -F),
+		\end{aligned}
+	\]
+	(\textit{在分次的情形下, 将 $ H\oplus H $ 替换成 $ H\oplus H^\op $ 即可}), 而 $ (0, H, -F) $ 是退化的. 因此 $ \varPhi_3(\rho, H, F)\sim_{s.h.}(\rho, H, F) $.\qed
+\end{Proof}
+
+因此令 $ \varPhi=\varPhi_3\circ\varPhi_2\circ\varPhi_1 $, 就得到 $ KK^p(\CA) $ 的被自伴、收缩且对合的 Fredholm 模的规范化. 因此总是可以假定 $ [\rho, H, F] $ 中的 $ F $ 是自伴、收缩的对合.
+
+下面考虑对 $ (\rho, H) $ 的限制:
+
+\begin{Definition}[非退化]
+	设 $ (\rho, H, F) $ 是 Fredholm 模. 若 $ \rho : \CA\to H $ 是非退化的, 则称 $ (\rho, H, F) $ 是\emph{非退化}的.
+\end{Definition}
+
+需要注意的是对 Fredholm 模来说, 非退化的定义与之前表示 $ [\rho, H, F]=0 $ 的退化的定义并不冲突. 因此我们可以谈论一个 ``非退化的退化 Fredholm 模''.
+
+\begin{Lemma}\label{lem:4.1-非退化条件}
+	$ KK^p(\CA) $ 可以被非退化的 Fredholm 模规范化.
+\end{Lemma}
+\begin{Proof}
+	令 $ P $ 是到 $ \baro{\rho(\CA)H} $ 的正交投影, 使用 $ \CF_{\text{nondeg}} $ 表示非退化 Fredholm 全体, 并定义对应
+	\[
+		\varPhi_4 : \CF\to\CF_{\text{nondeg}},\qquad (\rho, H, F)\mapsto(\rho|_{\baro{\rho(\CA)H}},\baro{\rho(\CA)H}, PFP).
+	\]
+	那么只需验证 $ \varPhi_4(\rho, H, F)\sim_{s.h.}(\rho, H, F) $ 即可. 这是因为
+	\[
+		(\rho, H, F)=\left(\rho|_H\oplus 0, PH\oplus(1-P)H,\mqty[PFP & PF(1-P) \\ (1-P)FP & (1-P)F(1-P)]\right).
+	\]
+	而
+	\[
+		\begin{aligned}
+			\mqty[ & PF(1-P) \\ (1-P)FP & ]\rho(a)&=\mqty[ & PF(1-P)\rho(a) \\ (1-P)FP\rho(a) & ]\\
+			&=\mqty[ & 0 \\ (1-P)F\rho(a) & ]\sim\mqty[ & 0 \\ (1-P)\rho(a)F & ]=0
+		\end{aligned}
+	\]
+	于是
+	\[
+		(\rho, H, F)\sim_{c.p.}(\rho, PH, PFP)\oplus(0, (1-P)H, (1-P)F(1-P)),
+	\]
+	而 $ (0, (1-P)H, (1-P)F(1-P)) $ 是退化的.\qed
+\end{Proof}
+
+任何 $ \CA $ 上的 Fredholm 模 $ (\rho, H, F) $ 都可以看作是 $ \tilde{\CA} $ 上非退化 Fredholm 模 $ (\tilde{\rho}, H, F) $ 的限制, 其中 $ \tilde{\rho} : \tilde{\CA}\to\CB(H) $ 是满足 $ \tilde{\rho}(a)=\rho(a) $, $ \tilde{\rho}(1)=\id $ 的非退化表示. 注意到这给出了满态射 $ KK^p(\tilde{\CA})\to KK^p(\CA) $.
+
+而对分次, 我们有这样的要求:
+
+\begin{Definition}[平衡]
+	设 $ (\rho, H, F) $ 是一个分次 Fredholm 模. 若它有以下的形式:
+	\[
+		(\rho, H, F)=(\rho_0\oplus\rho_0, H_0\oplus H_0, F),
+	\]
+	则称 $ (\rho, H, F) $ 是\emph{平衡}的. 若 $ (\rho, H, F) $ 不分次, 总是认为它是平衡的.
+\end{Definition}
+
+设 $ (\rho, H, F) $ 是一个分次 Fredholm 模, 由定义立刻得到下列的叙述是等价的:
+\begin{itemize}
+	\item $ (\rho, H, F) $ 酉等价于一个平衡分次 Fredholm 模.
+	\item 存在酉算子 $ U : H^+\to H^- $ 使得 $ U\rho^+U^*=\rho^- $.
+	\item 对任意 $ a\in\CA $, $ \left[\mqty[\rho^+(a) & \\ & \rho^-(a)],\mqty[ & U^* \\ U &]\right]=0 $.
+	\item 存在 $ F_{\text{deg}}\in\CB(H) $ 是奇算子, 使得 $ (\rho, H, F_{\text{deg}}) $ 是一个退化的分次 Fredholm 模.
+\end{itemize}
+特别地, 对最后一条, 如果 $ F $ 是不分次的, 那么令 $ F_{\text{deg}}=\id $, 这一叙述仍然成立.
+
+并非每个分次 Fredholm 模都是平衡的, 令 $ \varphi : \CA\to\C $ 是一个 *-同态, 那么 $ (\varphi\oplus 0, \C\oplus 0, 0) $ 就是一个不平衡的分次 Fredholm 模. 若 $ \CA=\C $, 那么这生成
+\[
+	KK^0_{\text{fd}}(\C):=\set{x_{m,n}=(\varphi^{\oplus m}\oplus\varphi^{\oplus n}, \C^{\oplus m}\oplus\C^{\oplus n},0) : m,n\in\Z},
+\]
+并且当 $ m=n $ 时
+\[
+	x_{n,n}=(\varphi^{\oplus n}\oplus\varphi^{\oplus n},\C^{\oplus n}\oplus\C^{\oplus n}, 0)\sim_{c.p.}\left(\varphi^{\oplus n}\oplus\varphi^{\oplus n},\C^{\oplus n}\oplus\C^{\oplus n},\mqty[ & 1 \\ 1 &]\right),
+\]
+而后者是退化的. 实际上, 态射
+\[
+	KK^0_{\text{fd}}(\C)\to KK^0(\C)\cong\Z,\qquad x_{m,n}\mapsto m-n
+\]
+给出一个同构.
+
+考虑表示 $ 1(\lambda)=\lambda\id $, 那么 $ \left(1\oplus 1, H_0\oplus H_0,\mqty[ & V \\ U &]\right) $ 给出一个 $ \C $ 上的分次 Fredholm 模, 并且是无限维的. 那么
+\[
+	\left[1\oplus 1, H_0\oplus H_0, \mqty[ & V \\ U &]\right]\Longleftrightarrow\Ind U=-\Ind V=0,
+\]
+这说明平衡并不能推出其在 $ KK^0(\CA) $ 等价类平凡.
+
+\begin{Lemma}\label{len:4.1-平衡条件}
+	$ KK^p(\CA) $ 可以被平衡 Fredholm 模规范化.
+\end{Lemma}
+\begin{Proof}
+	由于不分次的 Fredholm 模总是平衡的, 因此 $ p=1 $ 的情形平凡. 只考虑 $ p=0 $ 的情形. 以 $ \CF_{\text{bal}} $ 记平衡的 Fredholm 模全体, 定义一个对应
+	\[
+		\varPhi_5 : \CF\to\CF_{\text{bal}},\qquad (\rho, H, F)\mapsto(\rho\oplus(\rho\oplus\rho^{\op})^{\oplus\infty}, H\oplus(H\oplus H^{\op})^{\oplus\infty}, F\oplus\mqty[ & 1 \\ 1 &]^{\oplus\infty}).
+	\]
+	这是一个平衡的 Fredholm 模, 因
+	\[
+		H\oplus(H\oplus H^{\op})^{\oplus\infty}\sim_u H^{\oplus\infty}\oplus(H^{\op})^{\oplus\infty},\qquad \rho\oplus(\rho\oplus\rho^{\op})^{\infty}\sim_u\rho^{\oplus}\oplus(\rho^{\op})^{\oplus\infty}.
+	\]
+	只需验证 $ \varPhi_5(\rho, H, F)\sim_{s.h.}(\rho, H, F) $ 即可. 这是因为
+	\[
+		\varPhi_5(\rho, H, F)=(\rho, H, F)\oplus\left((\rho\oplus\rho^{\op})^{\oplus\infty}, (H\oplus H^{\op})^{\oplus\infty}, \mqty[ & 1 \\ 1 &]^{\oplus\infty}\right),
+	\]
+	而直和的第二项是退化的.\qed
+\end{Proof}
+
+我们为什么需要平衡性? 这是因为当我们只考虑平衡酉算子, 即形如 $ U_0\oplus U_0 $ 的算子时, 平衡性保证了本质酉等价能够推出稳定同伦.
+
+\begin{Definition}[本质酉等价]
+	设 $ (\rho_0, H_0, F_0) $ 与 $ (\rho_1, H_1, F_1) $ 是分次 Fredholm 模. 若存在奇的平衡酉算子 $ U : H_0\to H_1 $, 满足 $ \forall a\in\CA $,
+	\[
+		(U^*F_1U-F_0)\rho(a)\sim 0,\qquad U^*\rho_1(a)U-\rho_0(a)\sim 0,
+	\]
+	则称 $ (\rho_0, H_0, F_0) $ 与 $ (\rho_1, H_1, F_1) $ \emph{本质酉等价}, 记作 $ (\rho_0, H_0, F_0)\sim_{\ess.u.}(\rho_1, H_1, F_1) $.
+\end{Definition}
+
+上述定义中对 $ U $ 要求的第二条是重要的, 否则只能得到 $ \sim_u $ 和 $ \sim_{c.p.} $. 但对不平衡的 Fredholm 模, 本质酉等价并不能够推出稳定同伦: 例如 $ \CA=\C $, 那么 $ (1\oplus 0,\C\oplus\C, 0)\sim_{\ess.u.}(0\oplus 1,\C\oplus\C, 0) $. 但前者在 $ KK^0(\C) $ 中的等价类对应于 $ 1 $, 而后者的等价类对应于 $ -1 $.
+
+\begin{Proposition}
+	设 $ (\rho_0, H_0, F_0) $ 与 $ (\rho_1, H_1, F_1) $ 是本质酉等价的两个平衡分次 Fredholm 模, 则它们稳定同伦.
+\end{Proposition}
+\begin{Proof}
+	只需证明 $ [\rho_0, H_0, F_0]-[\rho_1, H_1, F_1]=0 $, 也即 $ (\rho_0\oplus\rho_1, H_0\oplus H_1^{\op}, F_0\oplus(-F_1)) $ 退化即可. 不失一般性, 假设 $ H_0=H_1=H $, $ F_0=F_1=F $, 否则我们可以做
+	\[
+		(\rho_1, H_1, F_1)\sim_u(\rho_1, H_0, \tilde{F_0})\sim_{c.p.}(\rho_1, H_0, F_0).
+	\]
+	我们希望 $ \left(\rho_0\oplus\rho_1, H\oplus H^{\op}, \mqty[F & \\ & -F]\right) $ 是退化的. 而
+	\[
+		F_t=\mqty[\cos\left(\frac{\pi t}{2}\right)F & \sin\left(\frac{\pi t}{2}\right)\id \\ \sin\left(\frac{\pi t}{2}\right)\id & -\cos\left(\frac{\pi t}{2}\right)F]
+	\]
+	给出了连接 $ \left(\rho_0\oplus\rho_1, H\oplus H^{\op}, \mqty[F & \\ & -F]\right) $ 与 $ \left(\rho_0\oplus\rho_1, H\oplus H^{\op}, \mqty[ & \id \\ \id &]\right) $ 的算子同伦. 由于 $ (\rho_0, H, F) $ 与 $ (\rho_1, H, F) $ 都是稳定的, 而对本质酉等价关系中对酉算子的要求也是平衡的. 因此当 $ (\rho_0, H, F_{\text{deg}}) $ 退化时 $ (\rho_1, H, F_{\text{deg}}) $ 也退化. 因此
+	\[
+		\left(\rho_0\oplus\rho_1, H\oplus H^{\op}, \mqty[& \id \\ \id &]\right)\sim_{o.h.}\left(\rho_0\oplus\rho_1, H\oplus H^{\op}, \mqty[ F_{\text{deg}} & \\ & F_{\text{deg}}]\right).
+	\]
+	而后者是退化的.\qed
+\end{Proof}
+
+现在我们给出了 $ KK^p(\CA) $ 可以被平衡 Fredholm 模规范化, 其中 $ H=H_0\oplus H_0 $, $ F=\mqty[ & 1 \\ 1 &] $. 因此
+\[
+	KK^0(\CA)\cong\set{(H_0, \rho^+, \rho^-) : \rho^{\pm} : \CA\to\CB(H), \forall a\in\CA\,(\rho^+(a)\sim\rho^-(a))}/\sim,
+\]
+这被称作是 $ K $--同调的 \emph{Cuntz 图景}. 更一般地,
+\[
+	KK^0(\CA,\CB)\cong\set{(\varphi^+,\varphi^-) : \varphi^{\pm} : \CA\to\CM(\CB\otimes\CK(H)), \forall a\in\CA\,(\varphi^+(a)-\varphi^-(a)\in\CB\otimes\CK(H))}/\sim
+\]
+这是一般的 Kasparov $ KK $--群. 其中 $ \CM(\CA) $ 表示 $ \CA $ 的乘子代数.
+
+\subsection{Kasparov \textit{KK}--群与 \textit{K}--同调群的一致性}
+
+在第 2 章中使用对偶理论定义了解析 $ K $--同调群 $ K^p(\CA) $, 而在本节通过 Fredholm 模定义了 Kasparov $ KK $--群 $ KK^p(\CA) $. 本小节的目的是说明
+\[
+	KK^p(\CA)\cong K^p(\CA),
+\]
+即这两种不同路径定义的群是一致的.
+
+唯一的问题在于对偶理论中对表示 $ \rho $ 具有丰沛的要求: 若 $ \rho : \CA\to\CB(H) $ 是丰沛的, 并且是非退化的, 才能保证 $ \CA\stackrel{\rho}{\to}\CB(H)\stackrel{\pi}{\to}\CQ(H) $ 是单态. Voiculescu 定理说明对任意 $ \rho' : \CA\to\CB(H) $, 他可以被丰沛的 $ \rho $ ``吸收'', 也即存在 $ U : H\to H\oplus H' $ 使得
+\[
+	U\rho(a)U^*\sim\rho(a)\oplus\rho'(a),\qquad \forall a\in\CA.
+\]
+
+因此对可分的 $ C^* $ 代数 $ \CA $, 定义其\emph{泛表示}是
+\[
+	\rho_{\CA} : \CA\hookrightarrow\tilde{\CA}\to\CB(H_{\CA}),
+\]
+其中 $ \tilde{\CA}\to\CB(H_{\CA}) $ 是丰沛表示. 在分次的情形下, 定义
+\[
+	\hat{\rho}_{\CA}=\rho_{\CA}\oplus\rho_{\CA} : \CA\to\CB(H_{\CA}\oplus H_{\CA}),
+\]
+注意到这是一个平衡表示.
+
+\begin{Lemma}
+	$ KK^p(\CA) $ 可以被自伴的、对合的、平衡 Fredholm 模规范化, 其中的表示是泛表示 $ \rho_{\CA} $, 或是分次情形下的 $ \hat{\rho}_{\CA} $.
+\end{Lemma}
+\begin{Proof}
+	建立对应
+	\[
+		\varPhi_0 : \CF_{\text{sa},\text{invo},\text{bal}}\to\CF_{\text{sa},\text{invo},\text{bal}},\qquad (\rho, H, F)\mapsto(\rho, H, F)\oplus(\rho_{\CA}, H_{\CA}, F_{\text{deg}}),
+	\]
+	在分次的情形下, 映到 $ (\hat{\rho}_{\CA}, \hat{H}_{\CA}, F_{\text{deg}}) $, 其中
+	\[
+		F_{\text{deg}}=\begin{cases}
+			1, & p=1,\\ \mqty[ & 1 \\ 1 &], & p=0.
+		\end{cases}
+	\]
+	由丰沛性质可知 $ (\rho, H, F)\oplus(\rho_{\CA}, H_{\CA}, F_{\text{deg}})\sim_{\ess. u.}(\rho_{\CA}, H_{\CA}, F_{\text{deg}}) $.\qed
+\end{Proof}
+
+\begin{Proposition}
+	$ KK^p(\CA)\cong K_{1-p}(\FD_{\rho_{\CA}(\CA)}) $.
+\end{Proposition}
+\begin{Proof}
+	当 $ p=1 $ 时, 取定一个自伴、对合的 Fredholm 模 $ (\rho_{\CA}, H_{\CA}, F)\in\text{Invo}_{\text{sa}}(\FD_{\rho_{\CA}}(\CA)) $, 并定义
+	\[
+		KK^1(\CA)\to K_0(\FD_{\rho_{\CA}}(\CA)),\qquad [\rho_{\CA}, H_{\CA}, F]\mapsto\left[\frac{F+1}{2}\right].
+	\]
+	在另一个方向, 定义
+	\[
+		K_0(\FD_{\rho_{\CA}}(\CA))\to KK^1(\CA),\qquad [P]\mapsto[\rho_{\CA}^{\oplus n}, H_{\CA}^{\oplus n}, 2P-1],
+	\]
+	其中 $ P\in\CP_n(\FD_{\rho_{\CA}}(\CA)) $. 容易验证上述两个态射互为逆.
+
+	当 $ p=0 $ 时, 取定一个自伴、对合的平衡 Fredholm 模 $ \left(\hat{\rho}_{\CA},\hat{H}_{\CA},\mqty[ & U^* \\ U &]\right) $, 并定义
+	\[
+		KK^0(\CA)\to K_1(\FD_{\rho_{\CA}}(\CA)),\qquad \left[\hat{\rho}_{\CA},\hat{H}_{\CA},\mqty[ & U^* \\ U &]\right]\mapsto[U].
+	\]
+	在另一个方向, 定义
+	\[
+		K_1(\FD_{\rho_{\CA}}(\CA))\to KK^0(\CA),\qquad [V]\mapsto\left[\hat{\rho}_{\CA}^{\oplus n}, \hat{H}_{\CA}^{\oplus n}, \mqty[ & U^* \\ U &]\right],
+	\]
+	其中 $ V\in\CU_n(\FD_{\rho_{\CA}}(\CA)) $. 容易验证上述两个态射互为逆.\qed
+\end{Proof}
+
+至此, 我们可以将对偶理论定义的解析 $ K $--同调群 $ K^p(\CA) $ 和使用 Fredholm 模定义的 Kasparov $ KK $--群 $ KK^p(\CA) $ 等同起来, 并在之后总是使用 $ K^p(\CA) $ 的写法.
+
+使用对偶理论的方法来描绘算子同伦得到如下的结果:
+
+\begin{Proposition}\label{prop:4.2-对偶理论算子同伦}
+	设 $ (\rho, H, F_0) $ 与 $ (\rho, H, F_1) $ 是 Fredholm 模. 在 $ \CQ(H) $ 上, 若 $ [\rho(a)(F_0F_1+F_1F_0)\rho(a^*)]\geqslant 0 $, 则 $ (\rho, H, F_0) \sim_{o.h.} (\rho, H, F_1) $.
+\end{Proposition}
+\begin{Proof}
+	考虑 $ t_0F_0+t_1F_1 $, 在 $ \FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CA) $ 上
+	\[
+		[(t_0F_0+t_1F_1)^2]=[t_0^2F_0^2+t_0t_1(F_0F_1+F_1F_0)+t_1^2F_1^2]\geqslant t_0^2+t_1^2,
+	\]
+	因此可以定义
+	\[
+		[F_t]=((1-t)F_0+tF_1)(((1-t)F_0+tF_1)^2)^{-1/2},
+	\]
+	容易验证 $ [F_t]^2=1 $, $ [F_t]^*=[F_t] $, $ [[F_t],[\rho(a)]]=0 $ 在 $ \FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CA) $ 上成立. 
+	
+	更准确地说, 在 $ \FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CA) $ 上 $ [F_0F_1+F_1F_0]\geqslant 0 $. 于是存在 $ T\in\FD_{\rho}(\CA) $ 使得 $ T\geqslant 0 $ 且 $ F_0F_1+F_1F_0-T\in\FD_{\rho}(\CA\slantpar\CA) $. 定义
+	\[
+		F_t=((1-t)F_0+tF_1)((1-t)^2+2(1-t)tT+t^2)^{-1/2},
+	\]
+	容易验证 $ F_t^2=1 $, $ F_t^*=F_t $, $ [F_t,\rho(a)]=0 $ 在 $ \FD_\rho(\CA) $ 上成立.\qed
+\end{Proof}
+
+\section{六项正合列和指标配对}
+
+在上一节中已经证明了
+\[
+	KK^p(\CA)\cong K^p(\CA)=K_{1-p}(\FD(\CA)),
+\]
+但要使用 Fredholm 模的定义来构建 $ K $--同调的六项正合列, 还需要相对 $ K $--同调群的 Fredholm 模定义. 因此本节的目的在于重新建立 $ K $--同调群的六项正合列和指标配对, 并借此完成 3.4 节中没有完成的结论证明.
+
+\subsection{相对 \textit{K}--同调群的 Fredholm 模定义}
+
+若无特殊说明, 总是认为 $ \CA $ 是一个 $ C^* $ 代数而 $ \CJ $ 是其理想.
+
+\begin{Definition}
+	设 $ (\rho, H, F) $ 是一个 Fredholm 模, 若它满足:
+	\begin{itemize}
+		\item $ H $ 是一个(\textit{分次的}) Hilbert 空间;
+		\item $ \rho : \CA\to\CB(H) $ 是一个(\textit{偶的})表示;
+		\item $ F\in\CB(H) $ 是一个(\textit{奇的})算子, 满足 $ \forall a\in\CA $, $ \forall j\in\CJ $, 成立 $ (F^2-1)\rho(j)\sim 0 $, $ (F-F^*)\rho(j)\sim 0 $, $ [F,\rho(a)]\sim 0 $,
+	\end{itemize}
+	则称 $ (\rho, H, F) $ 是 $ (\CA,\CA/\CJ) $ 上的一个(\textit{分次})\emph{相对 Fredholm 模}.
+\end{Definition}
+
+使用对偶代数的语言, 我们可以重述上面的定义, 但这里的表示 $ \rho $ 不再需要丰沛:
+\[
+	\FD_\rho(\CA\slantpar\CJ)=\set{T\in\FD_{\rho}(\CA) : \forall j\in\CJ\,(T\rho(j)\sim 0\sim\rho(j)T)}.
+\]
+对以上给定的 $ H $ 和 $ \rho $, $ (\rho, H, F) $ 是一个 $ (\CA,\CA/\CJ) $ 上的相对 Fredholm 模当且仅当 $ [F]\in\text{Invo}_{\text{sa}}(\FD_\rho(\CA)/\FD_{\rho}(\CA\slantpar\CJ)) $.
+
+对 $ C^* $ 代数的短正合列 $ 0\to\CJ\to\CA\to\CA/\CJ\to 0 $ 和一个表示 $ \rho : \CA\to\CB(H) $, 考虑
+\begin{center}
+	\begin{tikzcd}
+		0 \arrow[r] & \CJ \arrow[r] \arrow[d] & \CA \arrow[r] \arrow[d, "\rho"] & \CA/\CJ \arrow[r] \arrow[d] & 0 \\
+		0 \arrow[r] & \CK(H) \arrow[r]        & \CB(H) \arrow[r]                & \CQ(H) \arrow[r]            & 0
+	\end{tikzcd}
+\end{center}
+那么 $ (\rho\oplus 0, H\oplus 0, 0) $ 构成一个 $ (\CA,\CA/\CJ) $ 上的分次相对 Fredholm 模. 将其与 $ \CJ $ 上的 Fredholm 模 $ (\rho|_{\CJ}\oplus 0, H\oplus 0, 0) $ 比较, 其中 $ \rho|_{\CJ} : \CJ\to\CK(H) $ 是 $ \rho $ 在 $ \CJ $ 上的限制.
+\[
+	(\rho\oplus 0, H\oplus 0, 0)\xrightarrow{\text{excision}}(\rho|_{\CJ}\oplus 0, H\oplus 0, 0).
+\]
+这是通过 Fredholm 模建立切除定理的基本思路.
+
+只需要将 Fredholm 模规范化的过程对相对 Fredholm 模再做一遍(\textit{除了从收缩到对合的一步, 因为在相对 Fredholm 模的情形下这并不能导出本质交换}), 我们得到
+\[
+	KK^p(\CA,\CA/\CJ)=\set{\text{相对 Fredholm 模的酉等价类生成的 Abel 群全体}}/\sim_{o.h.},
+\]
+其中 $ p=1 $ 对应不分次的情形, $ p=0 $ 对应分次的情形.
+
+\begin{Proposition}
+	$ KK^p(\CA,\CA/\CJ) $ 可以被 $ (\CA,\CA/\CJ) $ 上的自伴、收缩(\textit{或对合, 二者不能同时成立}), 对 $ \tilde{\CA} $ 非退化的, 具有泛(\textit{分次})表示的平衡相对 Fredholm 模规范化.
+\end{Proposition}
+
+这无非是重新把规范化对相对 Fredholm 模做一遍.
+
+\begin{Theorem}
+	$ KK^p(\CA,\CA/\CJ)\cong K_{1-p}(\FD_{\hat{\rho}_{\CA}}(\CA)/\FD_{\hat{\rho}_{\CA}}(\CA\slantpar\CJ)) $, 在不分次的情形, 则将 $ \hat{\rho} $ 替换成 $ \rho $.
+\end{Theorem}
+\begin{Proof}
+	设 $ (\rho, H, F) $ 是 $ (\CA,\CA/\CJ) $ 上的相对 Fredholm 模, $ \rho $ 是泛(\textit{分次})表示. 那么定义
+	\[
+		KK^1(\CA,\CA/\CJ)\longleftrightarrow K_0(\FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CJ)),\quad (\rho, H, F)\mapsto\left[\frac{1+F}{2}\right],\ (\rho_{\CA}, H, 2P-1)\mapsfrom [P].
+	\]
+	和
+	\[
+		KK^0(\CA,\CA/\CJ)\longleftrightarrow K_1(\FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CJ)),\quad \left(\hat{\rho}_{\CA}, H, \mqty[ & u^* \\ u & ]\right)\mapsto [u],\ \left(\hat{\rho}_{\CA}, H, \mqty[ & u^* \\ u & ]\right)\mapsfrom [u].
+	\]
+	只需检验上述对应的确给出同构即可.\qed
+\end{Proof}
+
+在对偶理论部分的切除定理给出
+\[
+	K_p(\FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CJ))\cong K_p(\FD_{\rho}(\CJ)),
+\]
+于是由
+\[
+	KK^p(\CA,\CA/\CJ)\cong K_{1-p}(\FD_\rho(\CA)/\FD_{\rho}(\CA\slantpar\CJ))\cong K_{1-p}(\FD_\rho(\CJ))\cong K^p(\CJ)
+\]
+得到 $ KK^p(\CA,\CA/\CJ)\cong K^p(\CJ) $, 其中第二个同构由 Kasparov 技术性引理给出.
+
+\begin{Proposition}
+	$ K^p(\CJ) $ 可以被 $ (\CA,\CA/\CJ) $ 上的相对 Fredholm 模的限制规范化.
+\end{Proposition}
+\begin{Proof}
+	对 $ (\CA,\CA/\CJ) $ 上的相对 Fredholm 模 $ (\rho, H, F) $, 考虑
+	\[
+		(\rho, H, F)\longrightarrow(\rho', H, F)\longrightarrow(\rho', H, F'),
+	\]
+	其中 $ \rho : \CJ\to\CB(H) $, $ \rho' : \CA\to\CB(H) $. 那么由 Fredholm 模的定义, $ \forall j\in\CJ $,
+	\[
+		(F^2-1)\rho(j)\sim 0,\qquad (F_F^*)\rho(j)\sim 0,\qquad [F,\rho(j)]\sim 0.
+	\]
+	在 Kasparov 技术性引理中, 令 $ F'=XF $, 其中 $ X $ 满足 $ \forall a\in\CA $, $ \forall j\in\CJ $,
+	\[
+		[\rho(a),X]\sim 0,\qquad (1-X)\rho(j)\sim 0,\qquad [F,X]\sim 0,\qquad X[\rho(a), F]\sim 0,
+	\]
+	那么 $ \forall a\in\CA\,([F',\rho(a)]\sim 0) $. 于是 $ (\rho', H, F') $ 给出相同的等价类.\qed
+\end{Proof}
+
+\subsection{\textit{K}--同调的六项正合列}
+
+对 $ C^* $ 代数的短正合列
+\[
+	0\longrightarrow \CJ\stackrel{\iota}{\longrightarrow}\CA\stackrel{\pi}{\longrightarrow}\CA/\CJ\longrightarrow 0,
+\]
+我们希望得到一个六项正合列
+\begin{center}
+	\begin{tikzcd}
+		K^0(\CA/\CJ) \arrow[r, "\pi^*"] & K^0(\CA) \arrow[r, "\iota^*"]  & K^0(\CJ) \arrow[d]               \\
+		K^1(\CJ) \arrow[u]              & K^1(\CA) \arrow[l, "\iota^*"'] & K^1(\CA/\CJ) \arrow[l, "\pi^*"']
+	\end{tikzcd}
+\end{center}
+其中的两横行都由 $ K $--同调的函子性得出. 因此只需要构造边缘同态 $ \partial : K^p(\CJ)\to K^{1-p}(\CA/\CJ) $ 即可. 根据之前进行的讨论可以得到
+\begin{center}
+	\begin{tikzcd}
+		K^p(\CJ) \arrow[rrr, "\partial"] & & & K^{1-p}(\CA/\CJ)  \\
+		{K^p(\CA,\CA/\CJ)} \arrow[u, "\cong", "\text{excision}"'] \arrow[r, "\cong", "\text{duality}"'] & K_{1-p}(\FD_\rho(\CA)/\FD_\rho(\CA\slantpar\CJ)) \arrow[r, "\partial", "\vspace{0.5ex}\text{bdry in 6-term seq}"'] & K_p(\FD_\rho(\CA\slantpar\CJ)) & K_p(\FD_{\rho_{\CA/\CJ}}(\CA/\CJ)) \arrow[u, "\cong", "\text{duality}"'] \arrow[l, "\cong"', cyan]
+	\end{tikzcd}
+\end{center}
+因此实际上只需要考虑蓝色的态射是否是同构.
+
+为此考虑两个表示 $ \rho' : \CA/\CJ\to\CB(H') $ 和 $ \rho : \CA\to\CB(H) $. 有
+\[
+	\begin{aligned}
+		\FD_{\rho'}(\CA/\CJ)&=\set{T\in\CB(H) : \forall b\in\CA/\CJ\,([T,\rho'(b)]\sim 0)},\\
+		\FD_{\rho}(\CA\slantpar\CJ)&=\set{T\in\CB(H) : \forall a\in\CA\,([T,\rho(a)]\sim 0),\ \forall j\in\CJ\,(T\rho(j)\sim 0\sim \rho(j)T)}.
+	\end{aligned}
+\]
+那么 $ \rho'\circ\pi : \CA\to\CB(H') $ 是一个 $ \CA $ 上的表示, 这里 $ \pi : \CA\to\CA/\CJ $ 是商映射. 于是
+\[
+	\begin{aligned}
+		\FD_{\rho'\circ\pi}(\CA\slantpar\CJ)&=\set{T\in\CB(H') : \forall a\in\CA([T,\rho'\pi(a)]\sim 0),\ \forall j\in\CJ\,(T\rho'\pi(j)\sim 0\sim\rho'\pi(j)T)}\\
+		&=\set{T\in\CB(H') : \forall b\in\CA/\CJ\,([T,\rho'(b)]\sim 0)}\\
+		&=\FD_{\rho'}(\CA/\CJ),
+	\end{aligned}
+\]
+其中 $ T\rho'\pi(j)\sim 0\sim\rho'\pi(j)T $ 对任何 $ j\in\CJ $ 成立是因为此时 $ \pi(j)=0 $. 因此通过覆盖等距得到
+\[
+	K_p(\FD_{\rho_{\CA/\CJ}}(\CA/\CJ))=K_p(\FD_{\rho_{\CA/\CJ}\circ\pi}(\CA\slantpar\CJ))\to K_p(\FD_{\rho_{\CA}}(\CA\slantpar\CJ)).
+\]
+
+接下来, 假设短正合列
+\begin{center}
+	\begin{tikzcd}
+		0 \arrow[r] & \CJ \arrow[r] & \CA \arrow[r] & \CA/\CJ \arrow[r] \arrow[l, "\sigma"', bend right] & 0
+	\end{tikzcd}
+\end{center}
+半分裂, 也即存在 $ \sigma : \CA/\CJ\to\CA $ 完全正, 使得 $ \pi\circ\sigma=\id_\CA $.
+
+令 $ \rho : \CA\to\CB(H) $ 是一个表示, $ \rho\circ\sigma : \CA/\CJ\to\CB(H) $ 是完全正的. 由 Stinespring 定理可知存在可分 Hilbert 空间 $ H' $ 和表示 $ \rho'' : \CA/\CJ\to\CB(H\oplus H') $, 使得
+\[
+	\rho''(b)=\mqty[\rho\circ\sigma(b) & * \\ * & *].
+\]
+因此考虑 $ \FD_{\rho}(\CA\slantpar\CJ)\to \FD_{\rho''}(\CA/\CJ) $, $ T\mapsto\mqty[T & 0 \\ 0 & 0] $, 这给出一个态射, 使得下图交换:
+\begin{center}
+	\begin{tikzcd}
+		\FD_{\rho}(\CA\slantpar\CJ) \arrow[r] \arrow[rd] & \FD_{\rho''}(\CA/\CJ) \arrow[d] \\
+														 & \FD_{\rho_{\CA/\CJ}}(\CA/\CJ)  
+	\end{tikzcd}
+\end{center}
+其中下方的两个态射分别由刚刚给出的逆态射和覆盖等距给出. 于是这给出了 $ K $--同调版本的六项正合列.
+
+我们希望找到态射 $ K^p(\CA,\CA/\CJ)\to K^{1-p}(\CA/\CJ) $ 的具体形式, 并且避免覆盖等距.
+
+\begin{Proposition}
+	给定 $ C^* $ 代数的半分裂短正合列
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & \CJ \arrow[r, "\iota"] & \CA \arrow[r, "\pi"] & \CA/\CJ \arrow[r] & 0
+		\end{tikzcd}
+	\end{center}
+	若 $ (\rho, H, F) $ 是 $ (\CA,\CA/\CJ) $ 上自伴的相对 Fredholm 模, 且态射
+	\[
+		\psi : \CA/\CJ\to\CB(H\oplus H'),\qquad b\mapsto\mqty[\rho\circ\sigma(b) & * \\ * & *],
+	\]
+	那么 $ \partial[\rho, H, F] $ 具有以下的表示形式:
+	\begin{enumerate}
+		\item 若 $ (\rho, H, F) $ 是不分次的, 那么 $ U:=\diag\set{\me^{\imag\pi F}, -1}\in\CB(H\oplus H') $ 是酉算子, 且与 $ \psi(b) $ 本质交换. 令 $ H''=H\oplus H' $, 那么 $ \partial[\rho, H, F]=\left[\psi\oplus\psi, H''\oplus H'', \mqty[ & U^* \\ U &]\right] $.
+		\item 若 $ (\rho, H, F) $ 是分次的, 那么记 $ Q_{\pm} $ 是到 $ \ker(1-F^2)\cap H_{\pm} $ 的投影, 则 $ \diag\set{Q_{\pm}, 0}\in\CB(H\oplus H') $ 与 $ \psi(b) $ 本质交换. 令 $ H''=H\oplus H' $, 那么 $ \partial[\rho, H, F]=[\psi, H'', 2Q_+-1]-[\psi, H'', 2Q_--1] $.
+	\end{enumerate}
+\end{Proposition}
+\begin{Proof}
+	由边缘态射
+	\[
+		\partial : K_p(\FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CJ))\to K_p(\FD_{\rho}(\CA\slantpar\CJ))
+	\]
+	的具体形式进行计算即可.\qed
+\end{Proof}
+
+\subsection{指标配对}
+
+本小节的目标是使用 Fredholm 模的语言重新建立指标配对 $ \lrangle{\cdot,\cdot} : K_p(\CA)\times K^p(\CA)\to\Z $, $ p=0,1 $, 并且说明这一指标配对与六项正合列相容. 也即
+\begin{center}
+	\begin{tikzcd}[row sep=small]
+		K^0(\CJ) \arrow[ddd, "\partial"', bend right=49] & K^0(\CA) \arrow[l, "\iota^*"'] & K^0(\CA/\CJ) \arrow[l, "\pi^*"']              \\
+		K_0(\CJ) \arrow[r, "\iota_*"]                 & K_0(\CA) \arrow[r, "\pi_*"]    & K_0(\CA/\CJ) \arrow[d, "\partial"]            \\
+		K_1(\CA/\CJ) \arrow[u, "\partial"]            & K_1(\CA) \arrow[l, "\pi_*"']   & K_1(\CJ) \arrow[l, "\iota_*"']                \\
+		K^1(\CA/\CJ) \arrow[r, "\pi^*"]               & K^1(\CA) \arrow[r, "\iota^*"]  & K^1(\CJ) \arrow[uuu, "\partial"', bend right=49]
+	\end{tikzcd}
+\end{center}
+中, 满足
+\[
+	\begin{aligned}
+		\forall x\in K_p(\CA)\forall y\in K^p(\CA/\CJ)\,&(\lrangle{x,\pi^*(y)}=\lrangle{\pi_*(x),y}),\\
+		\forall x\in K_p(\CJ)\forall y\in K^p(\CA)\,&(\lrangle{x,\iota^*(y)}=\lrangle{\iota_*(x),y}).
+	\end{aligned}
+\]
+并且边缘态射应当满足 $ \forall x\in K_p(\CA/\CJ)\forall y\in K^{1-p}(\CJ)\,(\lrangle{\partial x,y}=\lrangle{x,\partial y}) $.
+
+\begin{De-Pr}
+	设 $ \CA $ 是单位 $ C^* $ 代数, $ K_1(\CA) $ 与 $ K^1(\CA) $ 的指标配对如下给出: 对 $ u\in\CU_k(\CA) $ 和不分次的单位 Fredholm 模 $ (\rho, H, F) $, 定义
+	\[
+		P=1_k\otimes\frac{1}{2}(1+F),\qquad U=(1_k\otimes\rho)(u),
+	\]
+	它们都是 $ \C^k\otimes H $ 上的算子. 那么
+	\[
+		PUP-(1-P) : \C^k\otimes H\to\C^k\otimes H
+	\]
+	是本质酉的, 于是
+	\[
+		\lrangle{\cdot,\cdot} : K_1(\CA)\times K^1(\CA)\to\Z,\qquad ([u],[\rho, H, F])\mapsto\Ind(PUP-(1-P))
+	\]
+	是良定义的, 且与之前定义的 $ p=1 $ 的指标配对一致.
+\end{De-Pr}
+
+这里对 $ F\in\FD_{\rho}(\CA) $, $ [F]\in\text{Invo}_{\text{sa}}(\FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CA)) $, 有 $ [(1+F)/2]\in\CP(\FD_{\rho}(\CA)/\FD_{\rho}(\CA\slantpar\CA)) $. 于是在 $ \CQ(H) $ 上 $ [[F],[U]]=0 $ 导出态射 $ K_0(\FD_{\rho}(\CA))\times K_1(\CA)\to K_1(\CQ(H))\cong\Z $.
+
+\begin{De-Pr}
+	设 $ \CA $ 是单位 $ C^* $ 代数, $ K_0(\CA) $ 与 $ K^0(\CA) $ 的指标配对如下给出: 对 $ p\in\CP_k(\CA) $ 和分次的单位 Fredholm 模 $ (\rho, H, F) $, 其中 $ F=\mqty[& U \\ V &] $, 定义
+	\[
+		P=(1_k\otimes\rho)(p) : \C^k\otimes H\to \C^k\otimes H,
+	\]
+	那么
+	\[
+		P(1_k\otimes U)P : P(\C^k\otimes H)\to P(\C^k\otimes H)
+	\]
+	是本质酉的, 从而是 Fredholm 的. 并且 $ \Ind(P(1_k\otimes U)P) $ 只与 $ [p]\in K_0(\CA) $ 和 $ [\rho, H, F]\in K^0(\CA) $ 的选取有关. 于是
+	\[
+		\lrangle{\cdot,\cdot} : K_0(\CA)\times K^0(\CA)\to Z,\qquad ([p],[\rho, H, F])\mapsto\Ind(P(1_k\otimes U)P)
+	\]
+	是良定义的, 且与之前定义的 $ p=0 $ 的指标配对一致.
+\end{De-Pr}
+
+而对 $ \CA $ 非单位的情形, 注意到
+\[
+	K_p(\tilde{\CA})=K_p(\CA)\oplus K_p(\C),\qquad K^p(\tilde{\CA})=K^p(\CA)\oplus K^p(\C),
+\]
+于是可以通过 $ K_p(\tilde{\CA})\times K^p(\tilde{\CA}) $ 的指标配对通过如下方式诱导 $ K_p(\CA)\times K^p(\CA) $ 的指标配对:
+\[
+	\lrangle{\cdot,\cdot} : (K_p(\CA)\oplus K_p(\C))\times(K^p(\CA)\oplus K^p(\C))\to\Z,\qquad (x_1+x_2,y_1+y_2)\mapsto\lrangle{x_1,y_1}+\lrangle{x_2,y_2}.
+\]
+其中 $ K_p(\tilde{\CA})\times K^p(\tilde{\CA}) $ 和 $ K_p(\C)\times K^p(\C) $ 的指标映射都已经被定义, 于是 $ \lrangle{x_1,y_1} $ 可以被定义.
+
+\begin{Example}
+	考虑 *-同态 $ \varphi : \CA\to\C $, 并定义 $ [\varphi]:=[\varphi\oplus 0,\C\oplus 0, 0]\in K^0(\CA) $. 那么对 $ p\in\CP_k(\CA) $, $ [p]\in K_0(\CA) $, 指标配对即为
+	\[
+		\lrangle{[p],[\varphi]}=[(1_k\otimes\varphi)(p)]\in K_0(\Mat_k(\C))\cong\Z.
+	\]
+\end{Example}
+
+要将新的指标配对与六项正合列相容, 我们还需要一些技术性工具. 对收缩的自伴元 $ X $ ,定义
+\[
+	X^\flat:=\set{f(X) : f\in C_0(-1,1)},
+\]
+这里的连续函数演算总是可以进行, 因 $ \norm{X}\leqslant 1 $ 和 $ \sigma(X)\subset[-1,1] $.
+
+\begin{Definition}[Schr\"odinger 对]
+	设 $ H $ 是 Hilbert 空间, $ (X,Y) $ 是一对 $ H $ 上收缩的自伴元. 若
+	\[
+		[Y,X^\flat]\subset\CK(H),\qquad X^\flat, Y^\flat\subset\CK(H),
+	\]
+	则称 $ (X,Y) $ 是一个 \emph{Schr\"odinger 对}. 在分次的情形下, 要求交换子是分次的交换子. 特别地, 若 Schr\"odinger 对 $ (X,Y) $ 还满足 $ [X,Y]\in\CK(H) $, 则称其为一个\emph{强 Schr\"odinger 对}.
+\end{Definition}
+
+对分次的情形, 其分次无非对应于奇函数和偶函数. 例如 $ 1-X^2\in X^{\flat}_{\text{even}} $, $ \cos(\pi X/2)\in X^\flat_{\text{even}} $; 而 $ \sin(\pi X)\in X^\flat_{\text{odd}} $, $ X(1-X^2)\in X^\flat_{\text{odd}} $. 一个经典的例子来源于量子物理:
+
+\begin{Example}
+	设 $ H=L^2(\R) $, 考虑其上的位移和动量:
+	\[
+		\begin{aligned}
+			X : L^2(\R)\to L^2(\R),&\qquad f(x)\mapsto\frac{x}{\sqrt{1+x^2}}f(x),\\
+			Y : L^2(\R)\to L^2(\R),&\qquad \widehat{Yf}(\xi)=\frac{\xi}{\sqrt{1+\xi^2}}\hat{f}(\xi).
+		\end{aligned}
+	\]
+	容易验证 $ [X,Y]\in\CK(H) $ 且 $ X^\flat, Y^\flat\subset\CK(H) $, 因此 $ (X,Y) $ 是一个强 Schr\"odinger 对.
+\end{Example}
+
+\begin{Example}\label{ex:4.3-不分次到分次的 Schrodinger 对}
+	对不分次的 Schr\"odinger 对 $ (X,Y) $, 通过定义
+	\[
+		X'=\mqty[& -\imag X\\ \imag X & ],\qquad Y'=\mqty[& Y \\ Y &],
+	\]
+	可以得到一个 $ H\oplus H $ 上的分次 Schr\"odinger 对. 若 $ (X,Y) $ 是强 Schr\"odinger 对, 则 $ (X', Y') $ 也是强 Schr\"odinger 对. 因此之后只需要考虑分次的情形.
+\end{Example}
+
+\begin{Definition}[Schr\"odinger 算子]
+	设 $ (X,Y) $ 是一个 Schr\"odinger 对, 定义其 \emph{Schr\"odinger 算子}为
+	\[
+		V(X,Y)=\varepsilon X+\sqrt{1-X^2}Y,
+	\]
+	其中在分次的情形 $ \varepsilon=1 $, 在不分次的情形 $ \varepsilon=\imag $.(\textit{由例~\ref{ex:4.3-不分次到分次的 Schrodinger 对}~可知这里 $ \varepsilon $ 的选取使得二者相容.})
+\end{Definition}
+
+\begin{Proposition}
+	设 $ (X,Y) $ 是分次 Schr\"odinger 对, 则 $ V(X,Y) $ 是一个奇的本质自伴且本质对合的算子.
+\end{Proposition}
+\begin{Proof}
+	$ V(X,Y) $ 是奇的由 $ \sqrt{1-X^2} $ 是偶的导出, 本质自伴由 $ [X^\flat, Y]\subset\CK(H) $, 于是
+	\[
+		(X+\sqrt{1-X^2}Y)^*=X+Y\sqrt{1-X^2}\sim X+\sqrt{1-X^2}Y.
+	\]
+	而本质对合则由
+	\[
+		\begin{aligned}
+			(X+\sqrt{1-X^2}Y)^2&=X^2+X\sqrt{1-X^2}Y+\sqrt{1-X^2}YX+\sqrt{1-X^2}Y\sqrt{1-X^2}Y  \\
+			&\sim X^2+(\sqrt{1-X^2}X)Y+Y(\sqrt{1-X^2}X)+(1-X^2)Y^2 \\
+			&\sim X^2+(1-X^2)Y^2 \hspace{12em} (\textit{因 $ \sqrt{1-X^2}X\in X^\flat_{\text{odd}} $})\\
+			&=1+X^2+(1-X^2)Y^2-1 \\
+			&=1-(1-X^2)(1-Y^2) \hspace{6.8em} (\textit{因 $ 1-X^2\in X^\flat $, $ 1-Y^2\in Y^\flat $})\\
+			&\sim 1.
+		\end{aligned}
+	\]
+	得到.\qed
+\end{Proof}
+
+因此 $ V(X,Y)=\mqty[& W \\ U &] $, 其中 $ U $ 是本质酉的, 且 $ \Ind V(X,Y)=\Ind U $. 例如 $ X^2=1 $ 而 $ V(X,Y)=\varepsilon X $ 时, $ \Ind V(X,Y)=0 $.
+
+\begin{Proposition}
+	设 $ (X,Y) $ 是分次的强 Schr\"odinger 对, 则 $ \Ind V(X,Y)=\Ind V(Y,X) $.
+\end{Proposition}
+\begin{Proof}
+	只需要检验
+	\[
+		\begin{aligned}
+			V(X,Y)V(Y,X)&+V(Y,X)V(X,Y)\\
+			&=(X+\sqrt{1-X^2}Y)(Y+\sqrt{1-Y^2}X)+(Y+\sqrt{1-Y^2}X)(X+\sqrt{1-X^2}Y)\\
+			&\sim XY+Y\sqrt{1-X^2}Y+X\sqrt{1-Y^2}X+\sqrt{1-X^2}\sqrt{1-Y^2}YX\\
+			&\phantom{\sim XY}\hspace{0.25em}+YX+Y\sqrt{1-X^2}Y+X\sqrt{1-X^2}Y+\sqrt{1-X^2}\sqrt{1-Y^2}XY\\
+			&\sim(1+\sqrt{1-X^2}\sqrt{1-Y^2})(XY+YX)+2(Y\sqrt{1-X^2}Y+X\sqrt{1-Y^2}X)\\
+			&\sim 2(Y\sqrt{1-X^2}Y+X\sqrt{1-Y^2}X)\\
+			&\geqslant 0.
+		\end{aligned}
+	\]
+	于是命题~\ref{prop:4.2-对偶理论算子同伦}~给出 $ [s,H,V(X,Y)]=[s, H, V(Y,X)]\in K^0(\C)\cong\Z $, 这里 $ s $ 是标量表示.\qed
+\end{Proof}
+
+对不分次的情形, $ \Ind V(X,Y)=-\Ind V(Y,X) $, 验证是类似的.
+
+\begin{Lemma}
+	设 $ (X,Y) $ 是 Schr\"odinger 对, 那么
+	\[
+		W_1(X,Y)=\me^{\imag\pi X}\frac{1}{2}(1+Y)-\frac{1}{2}(1-Y)
+	\]
+	是本质酉的, 于是是 Fredholm 的. 并且 $ \Ind W_1(X,Y)=\Ind V(X,Y) $.
+\end{Lemma}
+\begin{Proof}
+	由于
+	\[
+		W_1(X,Y)=\frac{\me^{\imag\pi X}-1}{2}+\frac{\me^{\imag\pi X}+1}{2}Y\sim \me^{\imag\frac{\pi}{2}X}\left(\imag\sin\frac{\pi X}{2}+\sqrt{1-\sin^2\frac{\pi X}{2}}Y\right),
+	\]
+	通过 $ X $ 与 $ \sin\frac{\pi X}{2} $ 之间的同伦可以得到
+	\[
+		W_1(X,Y)\sim\me^{\imag\frac{\pi}{2}X}(\imag X+\sqrt{1-X^2}Y)\sim_{o.h.} V(X,Y),
+	\]
+	得证.\qed
+\end{Proof}
+
+因此我们可以证明给出边缘态射与六项正合列是相容的. 当然, 我们只证明不分次的情形, 分次的情形是类似的.
+
+\begin{Lemma}
+	给定 $ C^* $ 代数的短正合列
+	\[
+		0\longrightarrow \CJ\stackrel{\iota}{\longrightarrow}\CA\stackrel{\pi}{\longrightarrow}\CA/\CJ\longrightarrow 0,
+	\]
+	和不分次的 $ (\CA,\CA/\CJ) $ 上的相对 Fredholm 模. 设 $ p\in CP_k(\CA/\CJ) $, 并记 $ a\in\Mat_k(\CA) $ 是 $ p $ 的一个提升, 那么
+	\[
+		((1_k\otimes\rho)(2a-1),1_k\otimes F)
+	\]
+	是一个强 Schr\"odinger 对.
+\end{Lemma}
+\begin{Proof}
+	这因 $ [2a-1]\in\text{Invo}_{\text{sa}}(\CA/\CJ) $, 于是令 $ X=(1_l\otimes\rho)(2a-1) $, $ Y=1_k\otimes Y $, 有 $ X^2=1 $ 且 $ X, Y $ 满足 Schr\"odinger 对的所有条件, 从而 $ (X,Y) $ 是强 Schr\"odinger 对.\qed
+\end{Proof}
+
+\begin{Theorem}
+	给定 $ C^* $ 代数的半分裂短正合列
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & \CJ \arrow[r] & \CA \arrow[r] & \CA/\CJ \arrow[r] \arrow[l, "\sigma"', bend right] & 0
+		\end{tikzcd}
+	\end{center}
+	有
+	\begin{enumerate}
+		\item $ \forall x\in K_0(\CA/\CJ)\forall y\in K^1(\CJ)\,(\lrangle{\partial x,y}=-\lrangle{x,\partial y}) $;
+		\item $ \forall x\in K_1(\CA/\CJ)\forall y\in K^0(\CJ)\,(\lrangle{\partial x,y}=\lrangle{x,\partial y}) $.
+	\end{enumerate}
+\end{Theorem}
+\begin{Proof}
+	只证明 (1), 即不分次的情形. 首先 $ \Ind V(X,Y)=-\Ind V(Y,X) $ 已经证明. 由 $ \partial[p]=[\me^{2\pi\imag a}]\in K_1(\CJ) $, 有
+	\[
+		\begin{aligned}
+			\lrangle{\partial[p],[\rho, H, F]}&=\Ind\left(\rho(\me^{2\pi\imag a})\frac{F+1}{2}-\left(1-\frac{F+1}{2}\right)\right)\\
+			&=\Ind(-\rho(\me^{\pi\imag(2a-1)})\frac{F+1}{2}-\left(1-\frac{F+1}{2}\right))=\Ind V(X,Y).
+		\end{aligned}
+	\]
+	再由 $ \partial[\rho, H, F]=\left(\rho'\oplus\rho, H'\oplus H', \mqty[ & U^* \\ U &]\right) $, 其中 $ \rho' : \CA/\CJ\to\CB(H') $, $ H'=H\oplus H_1 $, $ U=\diag\set{\me^{\imag\pi F},-1} $, 有
+	\[
+		\lrangle{[p],\partial[\rho, H, F]}=\Ind W_1(Y,X)=\Ind V(Y,X),
+	\]
+	于是命题成立.\qed
+\end{Proof}

@@ -1,0 +1,776 @@
+% !TeX root = main.tex
+
+\chapter{Brown--Douglas--Fillmore 理论}
+
+前略.
+
+\setcounter{section}{2}
+
+\section{一些同调代数的准备}
+
+本节我们需要做一些同调代数上的准备, 谙熟同调代数理论的读者可以略过.
+
+需要首先说明的是, 我们将总是在以下的范畴中考虑问题: 其对象是全体第二可数的, 局部紧的 Hausdorff 空间, 而对象 $ X,\ Y $ 之间的态射集 $ \Hom(X,Y)=:C(X,Y) $ 定义为
+\[
+	\Hom(X,Y):=\set{f : X^+\to Y^+ : f\,\text{连续且}\,f(\infty_X)=\infty_Y}.
+\]
+这里 $ X^+ $ 指的是 $ X $ 的单点紧化. 我们记这样的范畴为 \category{C2LCHaus}.
+
+因此在这样的约定之下, 当 $ Y\subset X $ 是一个子集时, 可以得到一个自然的态射 $ \pi\in C(X,X\sm Y) $ 如下定义:
+\[
+	\pi : X^+\to(X\sm Y)^+,\qquad x\mapsto\begin{cases}
+		x, & x\in X\sm Y, \\ \infty_{X\sm Y}, & x\notin X\sm Y.
+	\end{cases}
+\]
+而态射间的同伦是一个态射 $ H : C([0,1]\times X,Y) $. 称 $ f,g\in C(X,Y) $ 是同伦的, 若存在 $ H\in C([0,1]\times X,Y) $ 使得
+\[
+	H(0,\cdot)=f(\cdot),\qquad H(1,\cdot)=g(\cdot).
+\]
+记作 $ f\sim g $. 尽管形式上和通常的同伦没有区别, 但注意我们改变了 ``连续映射'' 的定义.
+
+称 $ X\in\Ob(\category{C2LCHaus}) $ 是\emph{可缩}的, 若 $ \id_X\sim r_\infty $, 其中 $ r_\infty : X^+\to X^+ $, $ x\mapsto \infty_X $. 因此 $ X $ 可缩与以下的叙述等价:
+\begin{itemize}
+	\item $ \infty_X\hookrightarrow X^+ $ 在通常意义下是同伦等价;
+	\item $ C_0(X) $ 在 $ C^* $ 代数的意义下是可缩的.
+\end{itemize}
+同样地, 我们需要注意在新的定义下, 紧空间不再是可缩的了.
+
+\subsection{广义同调理论}
+
+根据上面的约定, 我们只考虑 \category{C2LCHaus} 上的广义同调理论. 
+
+\begin{Definition}[广义同调理论]
+	称 \category{C2LCHaus} 上的一个\emph{广义同调理论}是一族反变函子 $ \set{h_p}_{p\in\Z} $, 满足
+	\begin{enumerate}
+		\item 每个 $ h_p $ 都是同伦不变的;
+		\item 若 $ Y\subset X $ 是一个闭子空间, 则有长正合列
+		\begin{center}
+			\begin{tikzcd}
+				\cdots \arrow[r] & h_p(Y) \arrow[r] & h_p(X) \arrow[r] & h_p(X\sm Y) \arrow[r] & h_{p-1}(Y) \arrow[r] & \cdots
+			\end{tikzcd}
+		\end{center}
+	\end{enumerate}
+\end{Definition}
+
+于是由定义立刻得到通常的 Mayer--Vietoris 序列:
+
+\begin{Proposition}[Mayer--Vietoris]
+	对 $ X $ 的闭子空间 $ X_1 $, $ X_2 $, 若 $ X=X_1\cup X_2 $, 有长正合列
+	\begin{center}
+		\begin{tikzcd}
+			\cdots \arrow[r] & h_p(X_1\cap X_2) \arrow[r] & h_p(X_1\oplus X_2) \arrow[r] & h_p(X) \arrow[r] & h_{p-1}(X_1\cap X_2) \arrow[r] & \cdots
+		\end{tikzcd}
+	\end{center}
+\end{Proposition}
+\begin{Proof}
+	对 $ X_1\subset X $ 和 $ X_1\cap X_2\subset X_2 $ 的长正合列做图追踪即可.\qed
+\end{Proof}
+
+使用 Mayer--Vietoris 序列, 有以下基本的结果:
+
+\begin{Proposition}
+	设 $ \set{h_p}_{p\in\Z} $ 是一个广义同调理论, 那么
+	\begin{enumerate}
+		\item 对 $ n\geqslant 0 $, 有 $ h_p(\R^n)=h_{p-n}(\mathrm{pt}) $.
+		\item 定义 $ X $ 的\emph{悬挂}为 $ SX:=\R\times X $, 那么 $ h_p(SX)\cong h_{p-1}(X) $, $ \forall p\in\Z $.
+		\item $ h_p(\S^n)\cong h_{p-n}(\mathrm{pt})\oplus h_p(\mathrm{pt}) $.
+	\end{enumerate}
+\end{Proposition}
+\begin{Proof}
+	(1) 对 $ \R^n=\R^{n-1}\times\R_{\geqslant 0}\cup\R^{n-1}\times\R_{\leqslant 0} $ 使用 Mayer--Vietoris 序列即可.
+	
+	(2) 对 $ SX=CX\cup CX $ 使用 Mayer--Vietoris 序列即可.
+
+	(3) 考虑分裂的正合列 $ 0\to h_p(\R^n)\to h_p(\S^n)\to h_p(\mathrm{pt})\to 0 $ 即可.	\qed
+\end{Proof}
+
+现在回到 $ K $--同调: \category{C2LCHaus} 与可分交换 $ C^* $-代数的反范畴 \category{SCommC*-Alg}$ ^\text{op} $ 是等价的. 更进一步, 对 $ X $ 的闭子空间 $ Y $, 我们有短正合列
+\[
+	0\longrightarrow C_0(X\sm Y)\longrightarrow C_0(X)\longrightarrow C_0(Y)\longrightarrow 0.
+\]
+使用第 2 章定义的 $ K $--同调群, 我们考虑
+\[
+	h_p(X):=\begin{cases}
+		K^0(C(X)), & p=2n, \\ K^1(C(X)), & p=2n+1.
+	\end{cases}
+\]
+那么 $ \set{h_p}_{p\in\Z} $ 是一个广义同调理论. 其中的同伦不变性来源于 $ K $--同调群的同伦不变性(\textit{仅对于可分交换的情形!}), 而长正合列则是 $ K $--同调群的 Bott 周期性给出的. 举个例子,
+\[
+	h_p(\mathrm{pt})=K^p(\C)=\begin{cases}
+		\Z, & p=2n, \\ 0, & p=2n+1.
+	\end{cases}
+\]
+于是我们得到
+\[
+	\Ext(C(\S^n))=\tilde{K}^1(C(\S^n))=K^1(C(\S^n))=h_1(\S^n)=h_{1-n}(\mathrm{pt})\oplus h_1(\mathrm{pt}),
+\]
+从而
+\[
+	\Ext(C(\S^n))=\begin{cases}
+		0, & p=2n. \\ \Z, & p=2n+1.
+	\end{cases}
+\]
+
+当 $ X $ 本身是紧空间时, 对某个 $ \mathrm{pt}\in X $, 令 $ X'=X\sm\set{\mathrm{pt}} $, 那么
+\[
+	\Ext(C(X))=\tilde{K}^1(C(X))=K^1(C(X))=h_1(X),
+\]
+且
+\[
+	\Ext(C(X))=\tilde{K}^1(C(X))=\tilde{K}^1(C(X')^+)=K^1(C(X'))=h_1(X'),
+\]
+于是 $ h_1(X)=h_1(X') $. 那么对嵌入 $ \mathrm{pt}\hookrightarrow X $, 有短正合列
+\[
+	0\longrightarrow h_p(X')\longrightarrow h_p(X)\longrightarrow h_p(\mathrm{pt})\longrightarrow 0.
+\]
+
+\subsection{Steenrod 同调理论}
+
+上一小节所述的广义同调理论可以推广到有限复形 $ X $ 上, 但为了处理更复杂的复形, 我们需要以下的凝聚公理:
+
+\begin{Definition}[Steenrod 广义同调理论]
+	称 \category{C2LCHaus} 上的一个 \emph{Steenrod 广义同调理论} 是一个广义同调理论 $ \set{h_p}_{p\in\Z} $, 且满足以下的凝聚公理: 对一列局部紧空间 $ X_j $, 若 $ X=\coprod_{j\geqslant 1}X_j $, 则投影 $ X\to X_j $ 诱导一个同构 $ h_p(X)\cong\prod_{j\geqslant 1}h_p(X_j) $.
+\end{Definition}
+
+注意到 $ \R^n $ 的任何紧子集 $ X $ 都是一列递减的有限单纯复形的交, 于是我们不妨设 $ X=\bigcap_{j\geqslant 1}X_j $, 这里 $ \set{X_j}_{j\geqslant 1} $ 是一列递减的有限单纯复形, 从而 $ X $ 是一列递减紧空间的交. 于是我们的目的变成了通过 $ h_p(X_j) $ 计算 $ h_p(X) $.
+
+下面介绍\emph{望远镜构造}: 对 $ X=\bigcap_{j\geqslant 1}X_j $, 定义
+\[
+	T:=\set{(t,x)\in[0,1)\times X_1 : t<\frac{1}{j}\implies x\in X_j}.
+\]
+那么 $ T $ 是一个局部紧空间, 称作是与 $ \set{X_j}_{j\geqslant 1} $ 相关的望远镜. 它得名于下面的图示:
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.4\linewidth]{figures/telescope_construction.png}
+\end{figure}
+
+\textit{这里使用了与原教材上不同的定义, 原教材中的 $ < $ 为 $ \leqslant $, 但这样会产生一些问题. 例如令 $ X_2=\set{0} $ 而 $ X_1=[0,1] $, 此时的 $ T $ 并不是可缩空间, 因为 $ T^+=\S^1 $.}
+
+注意到 $ T $ 是可缩的, 这因 $ \set{\infty}\hookrightarrow T^+ $ 是一个同伦等价. 并且 $ X=X\times\set{0}\hookrightarrow T $ 是嵌入, 于是由同调公理的长正合列可知 $ h_p(T\sm X)\cong h_{p-1}(X) $. 令 $ T_0=T\sm X $, $ T_1=\bigcup_{i\geqslant 1}\set{1/(i+1)}\times X_i\subset T_0 $, 那么
+\[
+	T_0\sm T_1=\bigcup_{j\geqslant 1}\left(\frac{1}{j+1},\frac{1}{j}\right)\times X_j\sim\bigcup_{j\geqslant 1}SX_j,
+\]
+于是凝聚公理给出长正合列
+\begin{center}
+	\begin{tikzcd}
+		\cdots \arrow[r] & h_p(T_1) \arrow[r] \arrow[d, Rightarrow, no head] & h_p(T_0) \arrow[r] & h_p(T_0\sm T_1) \arrow[r] \arrow[d, Rightarrow, no head]     & h_{p-1}(T_1) \arrow[r] \arrow[d, Rightarrow, no head] & \cdots \\
+						 & \prod_{j\geqslant 1}h_p(X_j)                      &                    & \prod_{j\geqslant 1}h_p(SX_j) \arrow[d, Rightarrow, no head] & \prod_{j\geqslant 1}h_{p-1}(X_j)                      &        \\
+						 &                                                   &                    & \prod_{j\geqslant 1}h_{p-1}(X_j)                             &                                                       &       
+	\end{tikzcd}
+\end{center}
+接下来只需要讨论边缘映射 $ \partial $ 的刻画即可.
+
+\begin{Lemma}
+	记号与上文相同, 边缘映射 $ \partial $ 由
+	\[
+		\partial : \prod_{j\geqslant 1}h_{p-1}(X_j)\to\prod_{j\geqslant 1}h_{p-1}(X_j),\quad (a_1,a_2,a_3,\dots)\mapsto(a_1-\alpha_2(a_2),a_2-\alpha_3(a_3),a_3-\alpha_4(a_4),\dots)
+	\]
+	给出, 至多相差一个符号. 其中 $ a_j\in h_{p-1}(X_j) $, $ \alpha_j : h_{p-1}(X_j)\to h_{p-1}(X_{j-1}) $ 是嵌入 $ X_j\hookrightarrow X_{j+1} $ 诱导的同态.
+\end{Lemma}
+\begin{Proof}
+	考虑望远镜的以下部分:
+	\[
+		T_j:=\left[\frac{1}{j+1},\frac{1}{j}\right)\times X_j\cup\left[\frac{1}{j},\frac{1}{j-1}\right)\times X_{j-1},
+	\]
+	将其看作两个 ``镜筒'' 的并之后对其使用 Mayer--Vietoris 序列即得.\qed
+\end{Proof}
+
+注意到这就是逆向系
+\begin{center}
+	\begin{tikzcd}
+	h_p(X_1) & h_p(X_2) \arrow[l, "\alpha_2"'] & h_p(X_3) \arrow[l, "\alpha_3"'] & \cdots \arrow[l, "\alpha_4"']
+	\end{tikzcd}
+\end{center}
+通过等化子和积定义的极限 $ \varprojlim h_p(X_j)=\ker\partial $. 因此定义加性函子
+\[
+	\lim\nolimits^1 h_p(X_j):=\coker\partial,
+\]
+得到正合列
+\[
+	0\longrightarrow \lim\nolimits^1 h_p(X_j)\longrightarrow h_p(X)\longrightarrow \varprojlim h_p(X_j)\longrightarrow 0.
+\]
+既然明确了正合性障碍在于 $ \lim^1 $, 那么只需要考虑合适 $ \lim^1 h_p(X_j)=0 $ 即可. 首先当 $ \partial $ 是满射时一定有 $ \lim^1 h_p(X_j) $.
+
+下面尝试说明由 $ K $--同调定义的 $ \set{h_p} $ 是一个广义 Steenrod 同调理论, 更精确地说, 对 $ X=\coprod_{j\geqslant 1} $, 需要证明
+\[
+	h_p(X)=K^p(C_0(X))=\prod_{j\geqslant 1}K^p(C_0(X_j))=\prod_{j\geqslant 1}h_p(X_j).
+\]
+
+\begin{Proposition}
+	令 $ \set{\CA_j} $ 是一列 $ C^* $ 代数, 则对 $ p\geqslant 1 $,
+	\[
+		K^p\left(\bigoplus_{j\geqslant 1}\CA_j\right)\cong\prod_{j\geqslant 1}K^p(\CA_j),
+	\]
+	这一同构由 $ \CA_j\hookrightarrow\bigoplus_{i\geqslant 1}\CA_i $ 导出.
+\end{Proposition}
+\begin{Proof}
+	由 $ K^p(\CA)=K^1(S^{p-1}\CA) $ 可知只需考虑 $ p=1 $ 的情形. 设 $ \CA=\bigoplus_{j\geqslant 1}\CA_j $, 取 $ \rho_j : \CA\to\CB(H_j) $ 是一个 $ \tilde{\CA}_j $ 的丰沛表示, 取 $ H=\bigoplus H_j $, $ \rho=\bigoplus_{j\geqslant 1}\rho_j : \CA\to\CB(H) $. 这是一个 $ \tilde{\CA} $ 的丰沛表示.
+
+	那么 $ H_j\hookrightarrow H $ 诱导一个 *-同态 $ \FD(\CA_j)\to\FD(\CA) $, 而它又诱导一个 *-同态
+	\[
+		\theta : \prod_{j\geqslant 1}\FD(\CA_j)\to\FD(\CA),\qquad (T_1,T_2,\dots)\mapsto\diag\set{T_1,T_2,\dots},
+	\]
+	由于对任意 $ (T_1,T_2,\dots)\in\prod_{j\geqslant 1}\FD(\CA_j) $, 由定义 $ [T_j,\rho_j(a_j)]\sim 0 $ 对任意 $ j $ 成立. 于是
+	\[
+		[\rho(a),\diag\set{T_1,T_2,\dots}]=\bigoplus_{j\geqslant 1}[\rho_j(a_j),T_j]\sim 0,
+	\]
+	这因 $ j\to\infty $ 时 $ \norm{a_j}\to 0 $, 从而 $ \theta $ 的值域的确落在 $ \FD(\CA) $ 中. 注意到 $ \theta $ 是单同态但不是满同态, 因
+	\[
+		\im\theta=\set{T\in\FD(\CA) : [T,P_j]\sim 0,\ \forall j},
+	\]
+	其中 $ P_j : H\to H_j $ 是典范投影. 那么注意到对任意 $ T\in\FD(\CA) $, 有
+	\[
+		T-\sum_{j\geqslant 1}P_jTP_j\in\FD(\CA\slantpar\CA).
+	\]
+	于是
+	\[
+		\tilde{\theta} : \prod_{j\geqslant 1}\FD(\CA_j)/\FD(\CA_j\slantpar\CA_j)\to\FD(\CA)/\FD(\CA\slantpar\CA)
+	\]
+	是一个同构.
+
+	由于 $ K^p(\FD(\CA\slantpar\CA))=0 $, 于是
+	\begin{gather*}
+			K^1(\CA)\cong K_0(\FD(\CA)/\FD(\CA\slantpar\CA))\cong K_0\left(\prod_{j\geqslant 1}\FD(\CA_j)/\FD(\CA_j\slantpar\CA_j)\right),\\
+			K^1(\CA_j)\cong K_0(\FD(\CA_j)/\FD(\CA_j\slantpar\CA_j)),
+	\end{gather*}
+	于是只需证明
+	\[
+		\Theta : K_0\left(\prod_{j\geqslant 1}\FD(\CA_j)/\FD(\CA_j\slantpar\CA_j)\right)\to\prod_{j\geqslant 1}K_0(\FD(\CA_j)/\FD(\CA_j\slantpar\CA_j))
+	\]
+	是同构即可.
+
+	首先, 由于 $ \pi^* : K_0(\FD(\CA_j))\to K_0(\FD(\CA_j)/\FD(\CA_j\slantpar\CA_j)) $ 是同构, 于是由命题 2.2.3 可知可以选取投影 $ P_j\in\FD(\CA_j) $ 作为 $ K_0(\FD(\CA_j)) $ 的代表元, 于是 $ \Theta $ 是满同态. 同样地, 由命题 2.2.3, 我们可以将 $ K_0(\prod_{j\geqslant 1}\FD(\CA_j)/\FD(\CA_j\slantpar\CA_j)) $ 中的元素写作 $ [p]=\left[\prod_{j\geqslant 1}p_j\right] $, 其中 $ p_j $ 是 $ \FD(\CA_j)/\FD(\CA_j\slantpar\CA_j) $ 上的投影, 且对应到 $ \FD(\CA_j) $ 上的投影 $ P_j $. 若 $ \forall j\,([P_j]=0) $, 那么 $ P_j\sim\id $, 此处的等价是 Murray--von Neumann 等价. 于是 $ p\sim\id $, 这就导出了 $ [p]=0 $, 于是 $ \Theta $ 是单同态. 由此命题得证.\qed
+\end{Proof}
+
+至此我们说明了
+\[
+	h_p(X):=\begin{cases}
+		K^0(C(X)), & p=2n, \\ K^1(C(X)), & p=2n+1.
+	\end{cases}
+\]
+是 \category{C2LCHaus} 上的一个广义 Steenrod 同调理论.
+
+\section{\textit{K}--同调与 \textit{K}--理论的对偶}
+
+回顾在代数拓扑学中如何从奇异同调出发计算上同调: 我们可以使用泛系数定理:
+\[
+	0\longleftarrow\Hom(H_p(X),G)\longleftarrow H^p(X;G)\longleftarrow\Ext(H_{p-1}(X),G)\longleftarrow 0.
+\]
+将这一思想转借到 $ K $--同调的计算, 如果能够通过 $ K $--理论来计算 $ K $--同调就万事大吉. 类似于 Poincar\'e 对偶, 我们也需要一个指标配对, 即映射 $ K_p(\CA)\times K^p(\CA)\to\Z $, 或者等价地, $ K^p(\CA)\to\Hom(K_p(\CA),\Z) $. 那么我们就可以使用五引理: 对短正合列
+\[
+	0\longrightarrow\CJ\longrightarrow\CA\longrightarrow\CA/\CJ\longrightarrow 0,
+\]
+考虑
+\begin{center}
+	\begin{tikzcd}[column sep=small]
+		\cdots \arrow[r] & K^p(\CA) \arrow[r] \arrow[d, dashed] & K^p(\CJ) \arrow[r] \arrow[d, dashed] & K^{p+1}(\CA/\CJ) \arrow[r] \arrow[d, dashed] & K^{p+1}(\CA) \arrow[r] \arrow[d, dashed] & \cdots \\
+		\cdots \arrow[r] & {\Hom(K_p(\CA),\Z)} \arrow[r]        & {\Hom(K_p(\CJ),\Z)} \arrow[r]        & {\Hom(K_{p+1}(\CA/\CJ),\Z)} \arrow[r]        & {\Hom(K_{p+1}(\CA),\Z)} \arrow[r]        & \cdots
+	\end{tikzcd}
+\end{center}
+如果指标配对已经定义好, 那么所有纵向虚线的态射都合理定义了. 但这里仍然有一个代数上的障碍: $ \Hom(\cdot,\Z) $ 并非正合函子, 这会产生一个 $ \Ext $ 群的障碍. 幸运的是, 我们可以解决这个障碍, 并建立 $ K $--理论和 $ K $--同调版本的泛系数定理.
+
+\subsection{对偶性和指标配对}
+
+首先考虑 $ p=1 $ 时的指标配对: 注意到 $ K^1(\CA)=K_0(\FD_{\rho}(\CA)) $, 我们知道 $ K_0(\FD(\CA)) $ 中的元素形如 $ [P] $, 其中 $ P $ 是 $ \FD(\CA) $ 中的投影, 而 $ u\in\CU_k(\tilde{\CA}) $ 时算子 $ P^{\oplus k}uP^{\oplus k} $ 是一个 $ \CB(PH^{\oplus k}) $ 上的 Fredholm 算子, 因此存在 Fredholm 指标. 这诱导我们这样定义指标配对:
+
+\begin{Definition}[$ p=1 $ 的指标配对]
+	$ K_1(\CA) $ 与 $ K^1(\CA) $ 之间的指标配对是指双线性映射
+	\[
+		\lrangle{\cdot,\cdot} : K_1(\CA)\times K^1(\CA)\to\Z,\qquad ([u],[P])\mapsto\Ind(P^{\oplus k}uP^{\oplus k}),
+	\]
+	其中 $ P\in\FD(\CA) $, $ u\in\CU_k(\tilde{\CA}) $. 那么相应的指标映射 $ \Index : K^1(\CA)\to\Hom(K_1(\CA),\Z) $ 可以定义.
+\end{Definition}
+
+这样的定义当然是合理的, 如果固定 $ [P] $, 那么 $ [u]=[v] $ 意即存在 $ k\in\N $ 使得 $ \diag\set{u,1_{k-n}}\sim_h\diag\set{v,1_{k-m}} $, 于是
+\[
+	\Ind(P^{\oplus k}\diag\set{u,1_{k-n}}P^{\oplus k})=\Ind(P^{\oplus k}\diag\set{v,1_{k-m}}P^{\oplus k}),
+\]
+只需要注意到 $ P $ 本身在 $ \CB(PH) $ 上的指标为零即可. 对 $ [u] $ 固定的情形, 讨论是几乎一致的. 而双线性是显然的.
+
+对 $ P\in\FD_\rho(\CA) $, 将其与抽象 Toeplitz 扩张 $ \varphi_P : \tilde{\CA}\to\CQ(PH) $ 通过 $ \varphi_P(a)=\pi(PaP) $ 联系起来, 其中 $ \pi : \CB(PH)\to\CQ(PH) $ 是自然投影. 另一方面, 取 Fredholm 指标的映射可以重写为
+\[
+	\partial : K_1(\CQ(PH))\to K_0(\CK(PH))=\Z,
+\]
+这是短正合列 $ 0\to\CK(PH)\to\CB(PH)\to\CQ(PH)\to 0 $ 导出六项正合列的边缘映射, 因此在 $ p=1 $ 情形下的指标配对也可以直接定义为
+\[
+	\lrangle{[u],[P]}=\partial([\varphi_P(u)]).
+\]
+回顾 $ \varphi_P : \tilde{\CA}\to\CQ(PH) $, 它可以对应到扩张
+\[
+	0\longrightarrow \CK(PH)\longrightarrow\CE\longrightarrow\tilde{\CA}\longrightarrow 0,
+\]
+于是六项正合列的边缘映射 $ \partial : K_1(\tilde{\CA})=K_1(\CA)\to K_0(\CK(PH))=\Z $, 那么 $ \partial([u])=\partial([\varphi_P(u)])=\lrangle{[u],[P]} $ 就立刻得到, 前一个等号只需要经过简单地图追踪就可以得到.
+
+在考虑 $ p=0 $ 时的指标配对: 对 $ K_0(\CA) $ 中的元素 $ g $, 它总可以写成形式差 $ g=[p]-[q] $, 其中 $ p,q\in\CP_k(\tilde{\CA}) $, 其中 $ \pi_{\C}(p)=\pi_{\C}(q) $, 这里 $ \pi_{\C} : \tilde{\CA}\to\C $. 而 $ K^0(\CA)=K_1(\FD_{\rho}(\CA)) $ 中的元素都具有 $ [U] $ 的形式, 其中 $ U $ 是 $ \FD_{\rho}(\CA) $ 中的酉元. 此时 $ pU^{\oplus k}p $ 是一个 $ \CB(pH) $ 上的 Fredholm 算子, 因此存在 Fredholm 指标. 这诱导我们这样定义指标配对:
+
+\begin{Definition}[$ p=0 $ 时的指标配对]
+	$ K_0(\CA) $ 与 $ K^0(\CA) $ 之间的指标配对是指双线性映射
+	\[
+		\lrangle{\cdot,\cdot} : K_0(\CA)\times K^0(\CA)\to\Z,\qquad ([p],[U])\mapsto\Ind(pU^{\oplus k}p),
+	\]
+	其中 $ p\in\CP_k(\tilde{\CA}) $, $ U\in\CU(\FD(\CA)) $. 那么相应的指标映射 $ \Index : K^0(\CA)\to\Hom(K_0(\CA),\Z) $ 可以定义.
+\end{Definition}
+
+指标配对与边缘映射之间具有如下关系:
+
+\begin{Proposition}\label{prop:3.4-边缘映射和指标配对}
+	设 $ \CJ\norsub\CA $, $ \CA\to\CA/\CJ $ 半分裂(\textit{这保证了 $ K $--同调版本的六项正合列}), 那么
+	\begin{enumerate}
+		\item $ \forall x\in K_0(\CA/\CJ) $, $ \forall y\in K^1(\CJ) $, 那么 $ \lrangle{\partial x,y}=-\lrangle{x,\partial y} $;
+		\item $ \forall x\in K_1(\CA/\CJ) $, $ \forall y\in K^0(\CJ) $, 那么 $ \lrangle{\partial x,y}=\lrangle{x,\partial y} $.
+	\end{enumerate}
+\end{Proposition}
+
+我们省略这一命题的证明, 通过另一种构造 $ K $--同调的方法可以得到以上命题更简洁且更符合直觉的证明, 因此我们把这一步留到下一章, 但暂且承认它.
+
+\begin{Lemma}~\label{lem:3.4-2 of 3}
+	设 $ \CA $ 是可分的交换 $ C^* $ 代数, $ \CJ $ 是 $ \CA $ 的理想. 考虑以下的交换图, 其中所有的纵向态射是指标配对给出的, 且下面的一行正合.
+	\begin{center}
+		\begin{tikzcd}[column sep=small]
+			\cdots \arrow[r] & K^p(\CA) \arrow[r] \arrow[d] & K^p(\CJ) \arrow[r] \arrow[d] & K^{p+1}(\CA/\CJ) \arrow[r] \arrow[d] & K^{p+1}(\CA) \arrow[r] \arrow[d] & \cdots \\
+			\cdots \arrow[r] & {\Hom(K_p(\CA),\Z)} \arrow[r]        & {\Hom(K_p(\CJ),\Z)} \arrow[r]        & {\Hom(K_{p+1}(\CA/\CJ),\Z)} \arrow[r]        & {\Hom(K_{p+1}(\CA),\Z)} \arrow[r]        & \cdots
+		\end{tikzcd}
+	\end{center}
+	那么以下的任意两个指标态射是同构都可以导出第三个指标态射是同构, 我们之后简记为 2 of 3.
+	\begin{enumerate}
+		\item $ K^p(\CJ)\to\Hom(K_p(\CJ),\Z) $, $ p=0,1 $;
+		\item $ K^p(\CA/\CJ)\to\Hom(K_p(\CA/\CJ),\Z) $, $ p=0,1 $;
+		\item $ K^p(\CA)\to\Hom(K_p(\CA),\Z) $, $ p=0,1 $.
+	\end{enumerate}
+\end{Lemma}
+
+如果我们承认命题~\ref{prop:3.4-边缘映射和指标配对}~, 那么立刻得到所求证. 但由于下一章才会给出这一命题的证明, 我们给出另外一种得到引理~\ref{lem:3.4-2 of 3}~的方式. 回顾 $ K $--理论的高阶群通过
+\[
+	K_p(\CA):=K_0(S^p\CA)=K_0(C_0(\R^n\otimes\CA)),\qquad \forall p\geqslant 0
+\]
+定义. 因此类似地也可以通过 $ K^p(\CA):=K^1(S^{p-1}\CA) $, $ \forall p\geqslant 1 $ 定义高阶的 $ K $--同调群. 由于已经定义了指标配对 $ K_1(\CA)\times K^1(\CA)\to\Z $, 对 $ p\geqslant 1 $ 的情形, 指标配对可以通过 $ K_1(S^{p-1}\CA)\times K^1(S^{p-1}\CA)\to\Z $ 来定义. 因此在 $ p\geqslant 1 $ 的情形仍然可以谈论 $ \Index : K^p(\CA)\to\Hom(K_p(\CA),\Z) $.
+
+在构造 $ K $--理论的长正合列时只用到了 $ K_p $ 的半正合性和同伦不变性, 而之前对粗几何的讨论中已经说明了对\textit{交换的} $ C^* $ 代数, $ K^1 $ 也满足半正合性和同伦不变性, 因此类似地可以得到交换 $ C^* $ 代数的 $ K $--同调正合列
+\[
+K^1(\CA/\CJ)\longrightarrow K^1(\CA)\longrightarrow K^1(\CJ)\longrightarrow K^2(\CA/\CJ)\longrightarrow K^2(\CA)\longrightarrow K^2(\CJ)\longrightarrow\cdots
+\]
+于是这引导我们考虑下面的交换图:
+\begin{center}
+	\begin{tikzcd}[column sep=small]
+		K^1(\CA/\CJ) \arrow[d] \arrow[r]  & K^1(\CA) \arrow[d] \arrow[r]  & K^1(\CJ) \arrow[d] \arrow[r]  & K^2(\CA/\CJ) \arrow[d] \arrow[r]  & \cdots \\
+		{\Hom(K_1(\CA/\CJ),\Z)} \arrow[r] & {\Hom(K_1(\CA),\Z)} \arrow[r] & {\Hom(K_1(\CJ),\Z)} \arrow[r] & {\Hom(K_2(\CA/\CJ),\Z)} \arrow[r] & \cdots
+	\end{tikzcd}
+\end{center}
+为了把以上交换图向左延伸, 我们需要 Bott 周期性.
+
+\begin{Theorem}[Bott 周期性]
+	对交换 $ C^* $ 代数 $ \CA $, 有
+	\[
+		K^p(\CA)\cong\begin{cases}
+			K^0(\CA),&\quad p=2k;\\ K^1(\CA),&\quad p=2k+1.
+		\end{cases}
+	\]
+\end{Theorem}
+\begin{Proof}
+	考虑正合列 $ 0\to S\CA\to C\CA\to \CA\to 0 $, 并且 $ C\CA $ 是可缩的, 因此由 $ K $--同调的六项正合列可知
+	\[
+		K^0(S\CA)\cong K^1(\CA),\qquad K^1(S\CA)\cong K^0(\CA),
+	\]
+	得证.\qed
+\end{Proof}
+
+\begin{Proposition}
+	Bott 映射 $ K^1(S^2\CA)\to K^1(\CA) $ 和 $ K_1(S^2\CA)\to K_1(\CA) $ 以及指标配对使得下图交换:
+	\begin{center}
+		\begin{tikzcd}
+			K^1(S^2\CA) \arrow[r] \arrow[d, "\Index"] & K^1(\CA) \arrow[d, "\Index"] \\
+			{\Hom(K_1(S^2\CA),\Z)} \arrow[r]          & {\Hom(K_1(\CA),\Z)}         
+		\end{tikzcd}
+	\end{center}
+\end{Proposition}
+
+因此引理~\ref{lem:3.4-2 of 3}~中的 $ p $ 可以从 $ p=0,1 $ 改成 $ p\geqslant 1 $, Bott 周期性会导出相同的结果.
+
+\begin{Proposition}
+	设 $ \CA $ 是交换的 $ C^* $ 代数, $ \CJ $ 是 $ \CA $ 的理想. 若 $ K_p(\CJ) $, $ K_p(\CA) $, $ K_p(\CA/\CJ) $ 都是自由群, 那么 2 of 3 成立.
+\end{Proposition}
+\begin{Proof}
+	这只需注意到 $ \Hom(\cdot,\Z) $ 保持自由群的正合列, 于是交换图中下面的一行是正合的. 对 $ p\geqslant 2 $ 的情形使用五引理, 而 $ p=1 $ 的情形由 Bott 周期性得到.\qed
+\end{Proof}
+
+单点集是最简单的拓扑空间, 通过不断对其进行悬挂构造可以得到 $ n $ 维球面 $ \S^n $. 因此首先考虑 $ X=\mathrm{pt} $ 情形下的指标映射, 再通过 $ X=\mathrm{pt} $ 的情形导出 $ X=\S^n $ 的情形:
+
+\begin{Example}
+	当 $ X=\mathrm{pt} $ 时, 指标映射诱导以下的同构
+	\[
+		K^p(\C)\cong \Hom(K_p(\C),\Z).
+	\]
+	当 $ p=1 $ 时由于 $ K_1(\C)=K^1(\C)=0 $, 这是平凡的.
+	
+	只需要考虑 $ p=0 $ 的情形. 此时 $ K_0(\C)=K^0(\C)=\Z $. 为此, 需要找到酉元 $ U\in\FD(\C) $ 和投影 $ p\in\CP_k(\C) $ 满足 $ \lrangle{[p],[U]}=1 $. 取 $ \rho : \C\to\CB(H\oplus H) $, $ \lambda\mapsto\diag\set{\lambda\id,0} $. 那么 $ \FD_{\rho}(\C)=\mqty[\CB(H) & \CK(H) \\ \CK(H) & \CB(H)] $. 取部分等距 $ S\in\CB(H) $ 满足 $ \dim\ker S=1 $, 那么
+	\[
+		U=\mqty[S & 1-SS^* \\ 1-S^*S & S^*]\in\CU(\FD(\C)).
+	\]
+	而取 $ p=1\in\C $ 是 $ \Mat_1(\C) $ 中的投影, 就有
+	\[
+		pUp=\mqty[1 & 0 \\ 0 & 0]\mqty[S & 1-SS^* \\ 1-S^*S & S^*]\mqty[1 & 0 \\ 0 & 0]\in\CB(P(H\oplus H)),
+	\]
+	从而 $ \Ind pUp=\Ind S=1 $.
+\end{Example}
+
+\begin{Example}
+	当 $ X=\S^n $ 时, 指标映射诱导以下的同构
+	\[
+		K^p(C(\S^n))\cong\Hom(K_p(C(\S^n)),\Z),
+	\]
+	其中 $ n\geqslant 0 $, $ p\geqslant 1 $. 这因 $ \S^n $ 的情形总可以通过不断构造悬挂来归结到 $ X=\mathrm{pt} $ 的情形, 而 $ K_p(\S^n) $ 总是自由 Abel 群. 因此由 2 of 3 可以得到.
+\end{Example}
+
+因此, 由同调公理和 Steenrod 同调公理中的凝聚公理, 我们可以得到紧集上指标映射.
+
+\begin{Proposition}\label{prop:3.4-指标映射同构条件}
+	设 $ X $ 是 $ \R^n $ 中的紧集, $ X=\bigcap_{j\geqslant 1}X_j $, 其中 $ X_j $ 均为有限单纯复形. 若
+	\begin{itemize}
+		\item $ X_j $ 使得 $ K_p(X_j) $ 是自由 Abel 群.
+		\item $ \Index : K^p(C(X_j))\to\Hom(K_p(C(X_j)),\Z) $ 对任意 $ p\geqslant 1 $ 是同构.
+	\end{itemize}
+	则 $ K^p(X) $ 和 $ K_p(X) $ 是至多可数个循环群和 $ p $-进群的直和, 且
+	\[
+		\Index : K^p(C(X))\to\Hom(K_p(C(X)),\Z)
+	\]
+	对任意 $ p\geqslant 1 $ 是同构.
+\end{Proposition}
+\begin{Proof}
+	首先考虑 $ X $ 是有限单纯复形的情形. 由六项正合列, 对 $ \dim X $ 做归纳可知 $ K_p(X) $ 和 $ K^p(X) $ 都是有限生成 Abel 群. 并且此时考虑有理化的指标映射
+	\[
+		\Index_\Q : K^p(C(X))\otimes\Q\to\Hom(K_p(C(X)),\Q),
+	\]
+	由于 $ \Hom(\cdot,\Q) $ 是正合函子, 于是将 $ \Index $ 替换成 $ \Index_\Q $ 之后得到的交换图中, 下面的一行总是正合的, 从而由五引理可知 $ \Index_\Q $ 是同构. 由有限生成 Abel 群的结构定理可知 $ \Index $ 的核与余核均落在挠子群的部分, 于是是有限维的.
+
+	由 $ K $--理论的连续性可知将 $ C(X) $ 看作 $ \varinjlim\bigoplus_{j=1}^n C(X_j) $ 之后,
+	\[
+		K_p(C(X))\cong\bigoplus_{j\geqslant 1}K_p(C(X_j)),
+	\]
+	于是
+	\[
+		\begin{aligned}
+			\Hom(K_p(C(X)),\Z)&=\Hom\left(K_p\left(\bigoplus_{j\geqslant 1}C(X_j)\right),\Z\right)\\
+			&=\Hom\left(\bigoplus_{j\geqslant 1}K_p(C(X_j)),\Z\right)=\prod_{j\geqslant 1}\Hom(K_p(C(X_j)),\Z).
+		\end{aligned}
+	\]
+	在交换图
+	\begin{center}
+		\begin{tikzcd}[column sep=small]
+			\prod_{j\geqslant 1}K^p(C(X_j)) \arrow[r] \arrow[d]  & \prod_{j\geqslant 1}K^p(C(X_j)) \arrow[r] \arrow[d]  & \phantom{mmmmmmmm}                                         &        \\
+			{\prod_{j\geqslant 1}\Hom(K_p(C(X_j)),\Z)} \arrow[r] & {\prod_{j\geqslant 1}\Hom(K_p(C(X_j)),\Z)} \arrow[r] & \phantom{mmmmmmmm}                                         &        \\
+			\phantom{mmmmmmmm} \arrow[r]                           & K^p(C(X)) \arrow[d] \arrow[r]                        & \prod_{j\geqslant 1}K^{p-1}(C(X_j)) \arrow[d] \arrow[r]  & \cdots \\
+			\phantom{mmmmmmmm} \arrow[r]                           & {\Hom(K_p(C(X)),\Z)} \arrow[r]                       & {\prod_{j\geqslant 1}\Hom(K_{p-1}(C(X_j)),\Z)} \arrow[r] & \cdots
+		\end{tikzcd}
+	\end{center}
+	中, 上面的一行正合是 $ K $--同调给出的, 下面的一行正合是望远镜构造给出的. 由五引理和 Bott 周期性即证.\qed
+\end{Proof}
+
+\subsection{Brown--Douglas--Fillmore 定理}
+
+下面我们回到 BDF 定理, 只需要考虑 $ \C $ 中的紧子集 $ X $. 如果对任意的 $ p\geqslant 1 $, $ K_p(C(X)) $ 都是自由 Abel 群, 那么代数上的障碍并不存在. 我们暂且承认这一点, 并在本小节的靠后位置证明它, 于是命题~\ref{prop:3.4-指标映射同构条件}~立刻导出以下结果:
+
+\begin{Theorem}\label{thm:3.4-紧子集指标映射是同构}
+	设 $ X $ 是 $ \C $ 的紧子集, 则指标映射
+	\[
+		\Index : K^p(C(X))\to\Hom(K_p(C(X)),\Z)
+	\]
+	对任意 $ p\geqslant 1 $ 都是同构.
+\end{Theorem}
+\begin{Proof}
+	这是命题~\ref{prop:3.4-指标映射同构条件}~的直接推论.
+\end{Proof}
+
+为了搞清楚 $ K_p(C(X)) $ 的结构, 我们引入看待 $ K_p(C(X)) $ 的另一种观点:
+
+\begin{Definition}[\v{C}ech 上同调群, Chern 特征标]
+	设 $ X $ 是紧 Hausdorff 空间, 定义
+	\begin{enumerate}
+		\item $ \check{H}^0(X):=\set{f : X\to\Z : f\,\text{连续}} $, 并且特征标由
+		\[
+			K_0(C(X))\to\check{H}^0(X),\qquad [p]\mapsto(x\mapsto\rank p(x))
+		\]
+		定义.
+		\item $ \check{H}^1(X):=\set{f : X\to\C\sm{0} : f\,\text{连续}}/\sim_h $, 并且特征标由
+		\[
+			K_1(C(X))\to\check{H}^1(X),\qquad [u]\mapsto(x\mapsto\det u(x))
+		\]
+		定义. 特别地, 若 $ X $ 是 CW 复形, 则 $ \check{H}^1(X)\cong H^1(X) $.
+	\end{enumerate}
+	这实际上是 $ X $ 的前两个 \emph{\v{C}ech 上同调群}, 其中的特征标就是 \emph{Chern 特征标}.
+\end{Definition}
+
+\begin{Proposition}\label{prop:3.4-K_0 自由}
+	设 $ X $ 是 $ \C $ 的非空紧子集, 则 $ K_p(C(X))\cong\check{H}^p(X) $, $ p=0,1 $. 特别地, $ K_0(C(X)) $ 是自由的.
+\end{Proposition}
+\begin{Proof}
+	若 $ X $ 是有限单纯复形, 做归纳即可. 对一般的 $ X $, 若 $ X=\bigcap_{j\geqslant 1}X_j $, 其中 $ (X_j)_{j\geqslant 1} $ 是一列递减的有限单纯复形, 那么 $ C(X)=\varinjlim C(X_j) $. 于是
+	\[
+		K_p(C(X))=K_p(\varinjlim C(X_j))=\varinjlim K_p(C(X_j))=\varinjlim\check{H}^p(X_j)=\check{H}^p(X).
+	\]
+	而对任意紧 Hausdorff 空间 $ X $, 存在满射 $ f : C\to X $, 这里 $ C $ 是 Cantor 集. 那么 $ \check{H}^0(X)\to\check{H}^0(C) $ 是一个单射. 由于任何自由 Abel 群的子群都是自由 Abel 群, 于是只需证明 $ \check{H}^0(C) $ 是自由 Abel 群, 这归结于计算 $ K_0(C(C)) $. 
+	
+	由 Cantor 集的构造可知 $ C $ 可以看作 $ [0,1] $ 去掉开集 $ U=\bigoplus_{(a,b)}(a,b) $, 将 $ C_0(U) $ 看作 $ C[0,1] $ 的理想后考虑
+	\[
+		\tilde{p}_{a,b}(t)=\begin{cases}
+			0, & t\leqslant a,\\ (t-a)/(b-a), & a<t<b, \\ 1, & t\geqslant b.
+		\end{cases}
+	\]
+	那么 $ K_1(C_0(U))=\bigoplus_{(a,b)}\Z[\me^{2\pi\imag\tilde{p}_{a.b}}] $, 其中 $ \Z[a] $ 表示 $ a $ 生成的自由群. 记 $ p_{a,b} $ 是 $ \tilde{p}_{a,b} $ 在 $ C $ 上的限制, 那么 $ p_{a,b} $ 是 $ C(C) $ 上的投影. 由六项正合列可知
+	\[
+		K_0(C(C))=\Z[1]\oplus\bigoplus_{(a,b)}\Z[p_{a,b}],
+	\]
+	从而 $ K_0(C(C)) $ 是自由 Abel 群.\qed
+\end{Proof}
+
+\begin{Proposition}\label{prop:3.4-K_1 自由}
+	设 $ X $ 是 $ \C $ 的非空紧子集, $ \set{\lambda_j}_{j\geqslant 1}\subset\C\sm X $ 使得每个 $ \C\sm X $ 的有界连通分支都恰有一个 $ \lambda_j $ 落在其中. 那么 $ \check{H}^1(X) $ 是由 $ [z\mapsto\lambda_j-z] $ 自由生成的, 这即 $ K_1(C(X)) $ 是自由的.
+\end{Proposition}
+\begin{Proof}
+	考虑 $ \C $ 的如下分解:
+	\[
+		\C=X\sqcup\coprod_{j\geqslant 1}U_j\sqcup C,
+	\]
+	其中 $ U_j $ 是 $ \C\sm X $ 的有界连通分支, $ C $ 是 $ \C\sm X $ 的无界连通分支. 六项正合列给出
+	\[
+		K_1(C(X))\cong\bigoplus_{j\geqslant 1}K_0(C_0(U_j))=\bigoplus_{j\geqslant 1}\Z[p_j],
+	\]
+	类似于命题~\ref{prop:3.4-K_0 自由}~, $ p_j $ 是 $ K\sm U_j $ 上的投影, 因此 $ K_1(C(X)) $ 自由.(\textit{关于生成元的计算只需要计算 $ p_j $ 在 $ \partial_1 $ 下的逆, 并通过特征标映射到 $ \check{H}^1(X) $.})\qed
+\end{Proof}
+
+因此命题~\ref{prop:3.4-K_0 自由}~和命题~\ref{prop:3.4-K_1 自由}~结合 Bott 周期律就得到最开始的断言: $ K_p(C(X)) $ 对任何 $ p\geqslant 1 $ 都是自由 Abel 群. 因此我们可以证明 Brown--Douglas--Fillmore 定理了.
+
+\begin{Theorem}[Brown--Douglas--Fillmore]
+	设 $ H $ 是 Hilbert 空间, $ T_1,\ T_2\in\CB(H) $ 是两个本质正规算子, 满足 $ \sigma_{\ess}(T_1)=\sigma_{\ess}(T_2)=X $. 那么 $ T_1 $ 与 $ T_2 $ 酉等价当且仅当对任意 $ \lambda\in\C\sm X $, 都有 $ \Ind(\lambda-T_1)=\Ind(\lambda-T_2) $. 特别地, 任何 $ \C\sm X $ 上的消失于无穷的局部常函数都具有 $ \Index : \lambda\mapsto\Ind(\lambda-T) $ 的形式, 其中 $ T $ 是一个本质正规算子, $ \sigma_{\ess}(T)=X $.
+\end{Theorem}
+\begin{Proof}
+	由定理~\ref{thm:3.4-紧子集指标映射是同构}~中得到 $ \Index : K^1(C(X))\to\Hom(K_1(C(X)),\Z) $ 是同构. 对任意本质正规算子 $ T\in\CB(H) $, 满足 $ \sigma_{\ess}(T)=X $, 连续函数演算
+	\[
+		\varphi : C(X)\to\CQ(H),\qquad f\mapsto f(\pi(T))
+	\]
+	是半分裂的. 由 Stinespring 定理可知存在表示 $ \rho : C(X)\to\CB(H_1) $, $ H\subset H_1 $, 使得投影 $ P : H_1\to H $ 满足 $ P\rho(z)P\sim T $. 取 $ T_1=\rho(z) $, 它在 $ \CB(H_1) $ 中正规, 于是 $ P\in\FD_{\rho}(C(X)) $. 那么 $ [T]\in\Ext(X) $ 对应到 $ [P]\in K_0(\FD_\rho(C(X)))=K^1(C(X)) $. 若 $ [f]\in\check{H}^1(X)\cong K_1(C(X)) $, 那么
+	\[
+		\lrangle{[f],[T]}=\Ind Pf(T_1)P,
+	\]
+	从而若 $ f(z)=z-\lambda $, 就有 $ \lrangle{[f],[T]}=\Ind(T-\lambda) $.
+
+	对后一断言, 只需注意到 $ \Hom(\check{H}^1(X),\Z) $ 就是指标函数全体.\qed
+\end{Proof}
+
+\subsection{泛系数定理}
+
+下面我们回头来解决代数上的障碍. 对上同调的泛系数定理, 令 $ \CC $ 是一个自由 Abel 链复形, 我们有以下的正合列
+\[
+	0\longleftarrow\Hom(H_p(\CC),G)\longleftarrow H^p(\CC;G)\longleftarrow\Ext(H_{p-1}(\CC),G)\longleftarrow 0.
+\]
+对 $ K $--同调和 $ K $--理论, 我们也有类似的泛系数定理:
+
+\begin{Theorem}
+	设 $ \CA $ 是可分的交换 $ C^* $ 代数, 则对任意 $ p\in\Z $, 以下序列正合.
+	\[
+		0\longrightarrow\Ext(K_p(\CA),\Z)\longrightarrow K^{p+1}(\CA)\stackrel{\Index}{\longrightarrow}\Hom(K_{p+1}(\CA),\Z)\longrightarrow 0.
+	\]
+\end{Theorem}
+
+特别地, 若 $ K_p(\CA) $ 是自由的, 则 $ \Ext(K_p(\CA),\Z)=0 $, 这就说明 $ \Index $ 是同构. 因此我们希望能够归结到自由 Abel 群的情形.
+
+\begin{Definition}[投射解消]
+	称一个可分交换 $ C^* $ 代数 $ \CA $ 的\emph{投射解消}是一个可分交换 $ C^* $ 代数的短正合列
+	\[
+		0\longrightarrow\CJ\longrightarrow\CB\longrightarrow\CA\longrightarrow 0,
+	\]
+	满足 $ \forall p\in\Z $, $ K_p(\CB) $ 是自由的, 且 $ K_p(\CB)\to K_p(\CA) $ 是满同态.
+\end{Definition}
+
+上述定义中的后一条件保证了序列
+\[
+	0\longrightarrow K_p(\CJ)\longrightarrow K_p(\CB)\longrightarrow K_p(\CA)\longrightarrow 0
+\]
+是短正合列, 而前一条件保证了 $ K_p(\CJ) $ 作为 $ K_p(\CB) $ 的子群仍然是自由 Abel 群. 因此上述短正合列作为 $ K_p(\CA) $ 的一个自由解消, 我们得到一个正合序列
+\[
+	0\longleftarrow\Ext(K_p(\CA),\Z)\longleftarrow\Hom(K_p(\CJ),\Z)\longleftarrow\Hom(K_p(\CB),\Z)\longleftarrow\Hom(K_p(\CA),\Z)\longleftarrow 0.
+\]
+
+若 $ \CA $ 满足泛系数定理, 则称 $ \CA $ 是\emph{可容许}的. 我们希望研究可容许 $ C^* $ 代数的继承性质, 并且将这些 ``容易处理的'' $ C^* $ 代数 --- 使得 $ K_p(\CA) $ 自由 Abel 的 $ C^* $ 代数 --- 推广到所有的可分交换 $ C^* $ 代数上.
+
+\begin{Definition}[可容许]
+	设 $ \CB $ 是一个可分交换 $ C^* $ 代数, 使得对任意 $ p\in\Z $, $ K_p(\CB) $ 是自由 Abel 群. 称 $ \CB $ 是\emph{可容许}的, 若对任意 $ p\in\Z $, $ \Index : K^p(\CB)\to\Hom(K_p(\CB),\Z) $ 是一个同构. 称投射解消
+	\[
+		0\longrightarrow\CJ\longrightarrow\CB\longrightarrow\CA\longrightarrow 0,
+	\]
+	是\emph{可容许}的, 若 $ \CB $ 是可容许的.
+\end{Definition}
+
+于是之前的 2 of 3 可以用可容许的定义重述为: 对可分交换 $ C^* $ 代数 $ \CA $, $ \CJ $ 是它的理想, 满足 $ K_p(\CA) $, $ K_p(\CJ) $, $ K_p(\CA/\CJ) $ 都是自由 Abel 群. 若 $ \CA $, $ \CJ $, $ \CA/\CJ $ 中的其中两个是可容许的, 那么另外一个也是可容许的.
+
+\begin{Proposition}
+	任何可分交换 $ C^* $ 代数都具有可容许的投射解消.
+\end{Proposition}
+
+以上命题的证明省略, 请各位读者相信它.
+
+给定一个可容许的投射解消, 考虑
+\begin{center}
+	\begin{tikzcd}[column sep=small]
+		& K^{p+1}(\CA)                  & K^p(\CJ) \arrow[l, "\partial"'] \arrow[d] & K^p(\CB) \arrow[l] \arrow[d, "\cong"] & K^p(\CA) \arrow[l] \arrow[d, "\Index"] & K^{p-1}(\CJ) \arrow[l, "\partial"'] \\
+	  0 & {\Ext(K_p(\CA),\Z)} \arrow[l] & {\Hom(K_p(\CJ),\Z)} \arrow[l]             & {\Hom(K_p(\CB),\Z)} \arrow[l]         & {\Hom(K_p(\CA),\Z)} \arrow[l]          & 0 \arrow[l]                        
+	  \end{tikzcd}
+\end{center}
+其中纵向的同构由可容许性导出. 其中
+\[
+	\begin{aligned}
+		\im[\partial : K^{p-1}(\CJ)\to K^p(\CA)]&=\ker[K^p(\CA)\to K^p(\CB)]\\
+		&=\ker[K^p(\CA)\to K^p(\CB)\stackrel{\cong}{\to}\Hom(K_p(\CB),\Z)]\\
+		&=\ker[K^p(\CA)\to\Hom(K_p(\CA),\Z)\to\Hom(K_p(\CB),\Z)]\\
+		&=\ker[\Index : K^p(\CA)\to\Hom(K_p(\CA),\Z)].
+	\end{aligned}
+\]
+于是将 $ \im\partial $ 记作 $ ^\circ K^p(\CA) $. 那么现在可以将上面的交换图改写如下:
+\begin{center}
+	\begin{tikzcd}[column sep=small]
+		0 & ^\circ K^{p+1}(\CA) \arrow[l] \arrow[d, "^\circ\Index"] & K^p(\CJ) \arrow[l, "\partial"'] \arrow[d] & K^p(\CB) \arrow[l] \arrow[d, "\cong"] & K^p(\CA)/^\circ K^p(\CA) \arrow[l] \arrow[d, "(\Index)_*"] & 0 \arrow[l] \\
+		0 & {\Ext(K_p(\CA),\Z)} \arrow[l]                           & {\Hom(K_p(\CJ),\Z)} \arrow[l]             & {\Hom(K_p(\CB),\Z)} \arrow[l]         & {\Hom(K_p(\CA),\Z)} \arrow[l]                          & 0 \arrow[l]
+	\end{tikzcd}
+\end{center}
+对 $ x\in K^p(\CJ) $, $ ^\circ\Index(\partial x) $ 对应于以下的扩张
+\begin{center}
+	\begin{tikzcd}
+		0 \arrow[r] & K_p(\CJ) \arrow[d, "\Index(x)"] \arrow[r] & K_p(\CB) \arrow[r] & K_p(\CA) \arrow[r] \arrow[d, Rightarrow, no head] & 0 \\
+		0 \arrow[r] & \Z \arrow[r]                              & E \arrow[r]        & K_p(\CA) \arrow[r]                                & 0
+	\end{tikzcd}
+\end{center}
+
+下面尝试计算 $ ^\circ\Index $: 注意到 $ ^\circ K^{p+1}(\CA)\subset K^{p+1}(\CA)=K^1(S^p\CA)=\Ext(S^p\CA) $, 于是它对应到扩张
+\[
+	0\longrightarrow\CK(H)\longrightarrow\CE\longrightarrow S^p\CA\longrightarrow 0.
+\]
+以上扩张在 $ ^\circ K^{p+1}(\CA) $ 中的等价类为零, 因此序列
+\[
+	0\longrightarrow K_0(\CK(H))\longrightarrow K_0(\CE)\longrightarrow K_0(S^p\CA)\longrightarrow 0
+\]
+正合. 这就得到了一个 $ \Ext(K_p(\CA),\Z) $ 中的元素.
+
+\begin{Lemma}
+	$ ^\circ\Index :、 ^\circ K^{p+1}(\CA)\to\Ext(K_p(\CA),\Z) $ 将
+	\[
+		0\longrightarrow\CK(H)\longrightarrow\CE\longrightarrow S^p\CA\longrightarrow 0
+	\]
+	映到
+	\[
+		0\longrightarrow K_0(\CK(H))\longrightarrow K_0(\CE)\longrightarrow K_0(S^p(\CA))\longrightarrow 0
+	\]
+	的加法逆元. 其中 $ ^\circ\Index $ 与投射解消的选取无关.
+\end{Lemma}
+\begin{Proof}
+	我们只证明 $ p=1 $ 的情形. 首先考虑以下交换图
+	\begin{center}
+		\begin{tikzcd}
+			0 & ^\circ K^1(S\CA) \arrow[l] \arrow[d] & K^1(\CJ) \arrow[l, "\partial"'] \arrow[d, "\Index"] & \Ext(\CJ) \arrow[l, Rightarrow, no head] \\
+			  & {\Ext(K_1(\CA),\Z)}                  & {\Hom(K_1(\CJ),\Z)} \arrow[l]                       &                                         
+		\end{tikzcd}
+	\end{center}
+	对任意 $ x\in K^1(\CJ) $, 它对应于一个扩张 $ 0\to\CK(H)\to\CF\to\CJ\to 0 $.
+
+	首先讨论态射 $ \partial : K^1(\CJ)\to ^\circ K^1(S\CA) $. 注意到有正合列
+	\[
+		0\longrightarrow S\CA\longrightarrow C(\CB,\CA)\longrightarrow\CA\longrightarrow 0.
+	\]
+	其中 $ C(\CB,\CA):=\set{(b,f) : f : [0,1]\to\CA\,\text{连续}\,, f(0)=0,\ f(1)=\pi(a)} $ 是映射柱. $ \partial $ 由以下的复合定义:
+	\begin{center}
+		\begin{tikzcd}[row sep=tiny]
+			K^1(\CJ)             & {K^1(C(\CB,\CA))} \arrow[l, "\cong"'] \arrow[r] & K^1(S\CA) \arrow[r, "\cong"]  & K^2(\CA)   \\
+			x \arrow[r, maps to] & * \arrow[r, maps to]                            & \partial x \arrow[r, maps to] & \partial x
+		\end{tikzcd}
+	\end{center}
+	用扩张的语言来讲, $ \partial $ 对应于以下交换图:
+	\begin{center}
+		\begin{tikzcd}[column sep=small]
+			0 \arrow[r] & \CK(H) \arrow[r] \arrow[d, Rightarrow, no head] & \CF \arrow[r] \arrow[d] & \CJ \arrow[r] \arrow[d]  & 0 &  & x\in K^1(\CJ)                         \\
+			0 \arrow[r] & \CK(H) \arrow[r]                                & \CE \arrow[r]           & {C(\CB,\CA)} \arrow[r]   & 0 &  & {*\in K^1(C(\CB,\CA))}                \\
+			0 \arrow[r] & \CK(H) \arrow[r] \arrow[u, Rightarrow, no head] & \CD \arrow[r] \arrow[u] & S\CA \arrow[r] \arrow[u] & 0 &  & \partial x\in K^1(S\CA)\cong K^2(\CA)
+		\end{tikzcd}
+	\end{center}
+	我们希望证明 $ 0\to K_0(\CK(H))\to K_0(\CD)\to K_0(S\CA)\to 0 $ 就是 $ \eta(\Index\, x) $ 的加法逆元.
+
+	注意到 $ \Index\,x : K_1(\CJ)\to K_0(\CK(H))\cong\Z $ 被 $ \eta $ 作用之后得到
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & K_1(\CJ) \arrow[r] \arrow[d, "{\Index\,x}"] & K_1(\CB) \arrow[r] \arrow[d] & K_1(\CA) \arrow[r] \arrow[d, Rightarrow, no head] & 0 \\
+			0 \arrow[r] & K_0(\CK(H)) \arrow[r]                       & G \arrow[r]                  & K_1(\CA) \arrow[r]                                & 0
+		\end{tikzcd}
+	\end{center}
+	因此我们希望
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & K_1(\CJ) \arrow[r] \arrow[d, "{\Index\,x}"] & K_1(\CB) \arrow[r] \arrow[d, dashed] & K_1(\CA) \arrow[r] \arrow[d, "{\times(-1)}"] & 0 \\
+			0 \arrow[r] & K_0(\CK(H)) \arrow[r]                       & K_0(\CD) \arrow[r]                  & K_1(\CA) \arrow[r]                                & 0
+		\end{tikzcd}
+	\end{center}
+	只需要构造虚线给出的态射. 由于 $ \Index\,x $ 由复合 $ K_0(S\CJ)\to K_0(C(\CF,\CJ))\stackrel{\cong}{\leftarrow}K_0(\CK(H)) $ 给出, 于是交换图
+	\begin{center}
+		\begin{tikzcd}
+			S\CJ \arrow[d] \arrow[r]  & {C(\CF,\CJ)} \arrow[d] & \CK(H) \arrow[l] \arrow[d, Rightarrow, no head] \\
+			{S(C(\CB,\CA))} \arrow[r] & {C(\CE,C(\CB,\CA))}    & \CK(H) \arrow[l]                               
+		\end{tikzcd}
+	\end{center}
+	给出
+	\begin{center}
+		\begin{tikzcd}
+			K_0(S\CJ) \arrow[d] \arrow[r] \arrow[rd, "{\Index\,x}"] & {K_0(C(\CF,\CJ))} \arrow[d, "\cong"] & K_0(\CK(H)) \arrow[l, "\cong"'] \arrow[d, Rightarrow, no head] \\
+			{K_0(S(C(\CB,\CA)))} \arrow[r]                          & {K_0(C(\CE,C(\CB,\CA)))}             & K_0(\CK(H)) \arrow[l, "\cong"']                               
+		\end{tikzcd}
+	\end{center}
+	这提示我们去考虑下面的交换图
+	\begin{center}
+		\begin{tikzcd}
+			0 \arrow[r] & S\CJ \arrow[r] \arrow[d]      & S\CB \arrow[r]                        & S\CA \arrow[r] \arrow[d, "\tau"] & 0 \\
+			0 \arrow[r] & {C(\CE,C(\CB,\CA))} \arrow[r] & {\tilde{C}(\CE,C(\CB,\CA))} \arrow[r] & S\CA \arrow[r]                   & 0 \\
+			0 \arrow[r] & \CK(H) \arrow[r] \arrow[u]    & \CD \arrow[r] \arrow[u]               & S\CA \arrow[r] \arrow[u]         & 0
+		\end{tikzcd}
+	\end{center}
+	其中 $ \tau $  $ (\tau f)(t)=f(1-t) $ 给出, $ S\CJ\to C(\CE,C(\CB,\CA)) $ 由 $ f\mapsto(0,\tilde{f}) $, $ \tilde{f}(t)=(f(t),0) $ 给出, 而
+	\[
+		\tilde{C}(\CE,C(\CB,\CA))=\set{(e,f)\in\CE\oplus C(\CB,\CA) : e\mapsto f(0)\in C(\CB,\CA),\ f(1)\in S\CA}.
+	\]
+	注意到 $ \tau_* $ 就是 $ \times(-1) $, 于是命题得证.\qed
+\end{Proof}
+
+因此可以再次扩大可容许的定义:
+
+\begin{Definition}[可容许, 推广]
+	设 $ \CA $ 是可分交换 $ C^* $ 代数. 若 $ \Index : K^p(\CA)\to\Hom(K_p(\CA),\Z) $ 对任意 $ p\geqslant 1 $ 都是满射, $ ^\circ\Index : \ ^\circ K^{p+1}(\CA)\to\Ext(K_p(\CA),\Z) $ 对任意 $ p\geqslant 1 $ 都是同构, 则称 $ \CA $ 是\emph{可容许}的.
+\end{Definition}
+
+注意到以上定义的条件可以导出 $ \CA $ 适用于泛系数定理. 我们希望任何可分交换 $ C^* $ 代数都是可容许的, 而五引理给出可容许判准: 若 $ 0\to\CJ\to\CB\to\CA\to 0 $ 是一个可容许的投射解消, 那么 $ \CA $ 可容许当且仅当 $ \CJ $ 可容许. 因此我们接下来只考虑 $ K_p(\CA) $ 是自由 Abel 群的情形, 并且由 2 of 3 可知可容许 $ C^* $ 代数在具有自由 $ K $--理论的前提下是封闭的.
+
+\begin{Lemma}
+	设 $ \CA $ 是可分交换 $ C^* $ 代数, $ \CJ $ 是 $ \CA $ 的理想. 若 $ \CJ $, $ \CA $, $ \CA/\CJ $ 的其中两个是可容许的, 并且其 $ K $--理论群是自由 Abel 群, 则另外一个也是可容许的.
+\end{Lemma}
+\begin{Proof}
+	共有三种情形, 不妨假设 $ \CJ $ 和 $ \CA $ 是可容许的且 $ K_p(\CJ) $ 与 $ K_p(\CA) $ 是自由 Abel 群, 其余的两种情形是类似的. 考虑 $ \CA/\CJ $ 的投射解消 $ 0\to\CI\to\CB\to\CA/\CJ\to 0 $, 考虑
+	\[
+		\CE:=\set{(a,b)\in\CA\oplus\CB : \pi(a)=\pi'(b)},
+	\]
+	那么下面的交换图中:
+	\begin{center}
+		\begin{tikzcd}[row sep=small, column sep=small]
+            &                                              & 0 \arrow[d]                                  & 0 \arrow[d]                     &   \\
+            &                                              & \CI \arrow[d] \arrow[r, Rightarrow, no head] & \CI \arrow[d]                   &   \\
+			0 \arrow[r] & \CJ \arrow[r] \arrow[d, Rightarrow, no head] & \CE \arrow[r] \arrow[d]                      & \CB \arrow[r] \arrow[d, "\pi'"] & 0 \\
+			0 \arrow[r] & \CJ \arrow[r]                                & \CA \arrow[d] \arrow[r, "\pi"]               & \CA/\CJ \arrow[d] \arrow[r]     & 0 \\
+            &                                              & 0                                            & 0                               &  
+		\end{tikzcd}
+	\end{center}
+	由于 $ 0\to\CI\to\CB\to\CA/\CJ\to 0 $ 是可容许的投射解消, 于是序列
+	\[
+		0\longrightarrow K_p(\CI)\longrightarrow K_p(\CB)\longrightarrow K_p(\CA/\CJ)\longrightarrow 0
+	\]
+	是正合的. 而 $ \CE $ 是一个拉回, 因此
+	\[
+		0\longrightarrow K_p(\CI)\longrightarrow K_p(\CE)\longrightarrow K_p(\CA)\longrightarrow 0
+	\]
+	也是正合的. 那么 $ K_p(\CI) $ 和 $ K_p(\CA) $ 都是自由 Abel 群蕴含 $ K_p(\CE) $ 也是自由 Abel 群. 因此在交换图中出现的所有 $ C^* $ 代数, 除 $ \CA/\CJ $ 之外, 其 $ K $--理论群都是自由 Abel 群. 因此 $ \CB,\CJ $ 可容许推出 $ \CE $ 可容许, 结合 $ \CA $ 可容许又可以推出 $ \CI $ 可容许, 从而由判准可知 $ \CA/\CJ $ 也是可容许的. \qed
+\end{Proof}
+
+实际上在上述引理的证明中, 如果只假定 $ K_p(\CA) $ 是自由 Abel 群, 对交换图做图追踪可以得到 $ K_p(\CE) $ 也是自由 Abel 群, 因此使用上述引理的结果可以得到 $ \CJ $ 是可容许的. 再将上述引理作用于左边第一条纵向的正合列得到 $ \CE $ 也是可容许的; 再将上述引理作用域上方第一条横向的正合列得到 $ \CI $ 也是可容许的, 因此 $ \CB $ 也是可容许的. 此时我们只要求两个可容许的 $ C^* $ 代数中有一个具有自由 Abel 群.
+
+对以上的论证再重复一次, 我们就可以推出没有自由 Abel 群要求的, 可容许性的 2 of 3. 那么由于 $ C_0(\R^n) $ 是可容许的 $ C^* $ 代数, 对 $ X\subset\R^n $ 是一个有限单纯复形, 通过归纳法和反复使用可容许性的 2 of 3 可知 $ C(X) $ 是可容许的. 而可容许的 $ C^* $ 代数的归纳极限仍是可容许的, 这由凝聚公理保证. 那么使用望远镜构造可知对任意紧子集 $ X\subset\R^n $, $ C(X) $ 都是可容许的. 因此泛系数定理对所有 $ C(X) $ 都成立.
